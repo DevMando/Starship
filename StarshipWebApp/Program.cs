@@ -1,10 +1,14 @@
 using StarshipWebApp.Components;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// Add Blazor Component libraries.
+builder.Services.AddRadzenComponents();
 
 var app = builder.Build();
 
