@@ -1,5 +1,6 @@
 using StarshipWebApp.Components;
 using Radzen;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,8 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-// Add Blazor Component libraries.
+// Add Blazor UI Component libraries.
 builder.Services.AddRadzenComponents();
+builder.Services.AddMudServices();
 
 var app = builder.Build();
 
