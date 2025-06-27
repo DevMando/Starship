@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StarshipWebApp.Utilities.Converters;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -19,21 +20,25 @@ namespace StarshipWebApp.Models
         public string Manufacturer { get; set; }
 
         [JsonPropertyName("cost_in_credits")]
-        public long CostInCredits { get; set; }
+        [JsonConverter(typeof(NullableLongConverter))]
+        public long? CostInCredits { get; set; } = null;
 
         [JsonPropertyName("length")]
         public string Length { get; set; }
 
         [JsonPropertyName("max_atmosphering_speed")]
+        [JsonConverter(typeof(NullableIntConverter))]
         public int? MaxAtmospheringSpeed { get; set; } = null;
 
         [JsonPropertyName("crew")]
         public string Crew { get; set; }
 
         [JsonPropertyName("passengers")]
+        [JsonConverter(typeof(NullableIntConverter))]
         public int? Passengers { get; set; } = null;
 
         [JsonPropertyName("cargo_capacity")]
+        [JsonConverter(typeof(NullableLongConverter))]
         public long? CargoCapacity { get; set; } = null;
 
         [JsonPropertyName("consumables")]

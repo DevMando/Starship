@@ -28,7 +28,7 @@ namespace StarshipWebApp.Services
 
         public async Task<List<Starship>> GetStarshipsAsync()
         {
-            var url = "https://swapi.dev/api/starships/";
+            var url = "https://swapi.info/api/starships";
             var starships = new List<Starship>();
 
             while (url != null)
@@ -42,23 +42,15 @@ namespace StarshipWebApp.Services
                 }
 
                 var content = await response.Content.ReadAsStringAsync();
-                var result = JsonSerializer.Deserialize<StarshipApiResponse>(content, JsonUtilities.DefaultOptions());
+                starships = JsonSerializer.Deserialize<List<Starship>>(content, JsonUtilities.DefaultOptions());
 
-                if (result?.Results != null)
-                    starships.AddRange(result.Results);
-
-                url = result?.Next;
+                if (starships.Any())
+                {
+                    starships.AddRange(starships);
+                }
             }
 
             return starships;
         }
-    }
-
-    public class StarshipApiResponse
-    {
-        public int Count { get; set; }
-        public string? Next { get; set; }
-        public string? Previous { get; set; }
-        public List<Starship> Results { get; set; } = new();
     }
 }
