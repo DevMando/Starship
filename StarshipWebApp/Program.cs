@@ -3,6 +3,7 @@ using Radzen;
 using MudBlazor.Services;
 using StarshipWebApp.Data;
 using Microsoft.EntityFrameworkCore;
+using StarshipWebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +15,12 @@ builder.Services.AddRazorComponents()
 builder.Services.AddRadzenComponents();
 builder.Services.AddMudServices();
 
+// DbContexts
 builder.Services.AddDbContext<StarWarsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// API Services.
+builder.Services.AddHttpClient<SwapiService>();
 
 var app = builder.Build();
 
@@ -34,5 +39,15 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+// Seed the database if necessary.
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<StarWarsContext>();
+    var swapiService = scope.ServiceProvider.GetRequiredService<SwapiService>();
+    
+    await dbContext.Database.MigrateAsync();
+    await DbSeeder.SeedStarshipsAsync(dbContext, swapiService);
+}
 
 app.Run();
