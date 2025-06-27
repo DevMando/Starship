@@ -1,6 +1,8 @@
 using StarshipWebApp.Components;
 using Radzen;
 using MudBlazor.Services;
+using StarshipWebApp.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,9 @@ builder.Services.AddRazorComponents()
 // Add Blazor UI Component libraries.
 builder.Services.AddRadzenComponents();
 builder.Services.AddMudServices();
+
+builder.Services.AddDbContext<StarWarsContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
