@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace StarshipWebApp.Models
@@ -39,6 +40,7 @@ namespace StarshipWebApp.Models
         public string Consumables { get; set; }
 
         [JsonPropertyName("hyperdrive_rating")]
+        [Precision(5, 2)]
         public decimal HyperdriveRating { get; set; }
 
         [JsonPropertyName("MGLT")]
