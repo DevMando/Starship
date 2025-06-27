@@ -1,0 +1,85 @@
+﻿@page "/Starships"
+
+@using MudBlazor
+@inject StarshipWebApp.Data.StarWarsContext StarWarsContext
+
+<h3>Starships</h3>
+
+
+<MudDataGrid T="Starship" MultiSelection="true" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
+Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" SelectedItemsChanged="@SelectedItemsChanged">
+    <ToolBarContent>
+        <MudText Typo="MudBlazor.Typo.h6">Starships</MudText>>
+        <MudSpacer />
+        <MudTextField @bind-Value="SearchText" Placeholder="Search" Adornment="MudBlazor.Adornment.Start" Immediate="true"
+        AdornmentIcon="@MudBlazor.Icons.Material.Filled.Search" IconSize="MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <Columns>
+        <SelectColumn T="Starship" />
+        <PropertyColumn Property="x => x.Name" Title="Name" Sortable="true" Filterable="true" />
+        <PropertyColumn Property="x => x.Model" Title="Model" Sortable="true" Filterable="true" />
+        <PropertyColumn Property="x => x.Manufacturer" SortBy="@_sortBy" Sortable="true"/>
+        <PropertyColumn Property="x => x.CostInCredits" Title="Cost in Credits" Sortable="true"/>
+        <PropertyColumn Property="x => x.Length" Title="Length"  Sortable="true"/>
+        <PropertyColumn Property="x => x.CargoCapacity" Title="Category Capacity" Sortable="true" />
+    </Columns>
+    <PagerContent>
+        <MudDataGridPager T="Starship" />
+    </PagerContent>
+</MudDataGrid>
+
+
+@code {
+
+    private IEnumerable<Starship> StarshipList;
+    private string SearchText = string.Empty;
+    private bool _sortNameByLength;
+
+    protected override async Task OnInitializedAsync()
+    {
+        StarshipList = StarWarsContext.Starships;
+    }   
+
+    // events
+    void RowClicked(MudBlazor.DataGridRowClickEventArgs<Starship> args)
+    {
+        
+    }
+
+    void RowRightClicked(MudBlazor.DataGridRowClickEventArgs<Starship> args)
+    {
+        
+    }
+
+    void SelectedItemsChanged(HashSet<Starship> items)
+    {
+        
+    }
+
+    private Func<Starship, object> _sortBy => x =>
+    {
+        if (_sortNameByLength)
+            return x.Name.Length;
+        else
+            return x.Name;
+    };
+
+    // quick filter - filter globally across multiple columns with the same input
+    private Func<Starship, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(SearchText))
+            return true;
+
+        if (x.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (x.Model.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if ($"{x.StarshipClass}".Contains(SearchText))
+            return true;
+
+        return false;
+    };
+
+}
