@@ -58,10 +58,10 @@ namespace StarshipWebApp.Models
         public int? StarshipClassId { get; set; } = null;
 
         [JsonPropertyName("pilots")]
-        public string Pilots { get; set; }
+        public List<string>? Pilots { get; set; } = null;
 
         [JsonPropertyName("films")]
-        public string Films { get; set; }
+        public List<string>? Films { get; set; } = null;
 
         [JsonPropertyName("created")]
         public DateTime Created { get; set; }

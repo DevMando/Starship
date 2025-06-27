@@ -31,24 +31,18 @@ namespace StarshipWebApp.Services
             var url = "https://swapi.info/api/starships";
             var starships = new List<Starship>();
 
-            while (url != null)
+
+            var response = await _httpClient.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
             {
-                var response = await _httpClient.GetAsync(url);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    // Optional: Log or throw a custom exception
-                    throw new HttpRequestException($"Failed to retrieve data from SWAPI: {response.StatusCode}");
-                }
-
-                var content = await response.Content.ReadAsStringAsync();
-                starships = JsonSerializer.Deserialize<List<Starship>>(content, JsonUtilities.DefaultOptions());
-
-                if (starships.Any())
-                {
-                    starships.AddRange(starships);
-                }
+                // Optional: Log or throw a custom exception
+                throw new HttpRequestException($"Failed to retrieve data from SWAPI: {response.StatusCode}");
             }
+
+            var content = await response.Content.ReadAsStringAsync();
+            starships = JsonSerializer.Deserialize<List<Starship>>(content, JsonUtilities.DefaultOptions());
+
 
             return starships;
         }
