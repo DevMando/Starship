@@ -19,6 +19,7 @@ namespace StarshipWebApp.Utilities
             var options = new JsonSerializerOptions();
             options.Converters.Add(new NullableLongConverter());
             options.Converters.Add(new NullableIntConverter());
+            options.Converters.Add(new NullableDecimalConverter());
             return options;
         }
 

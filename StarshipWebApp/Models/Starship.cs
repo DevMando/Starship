@@ -44,9 +44,10 @@ namespace StarshipWebApp.Models
         [JsonPropertyName("consumables")]
         public string Consumables { get; set; }
 
-        [JsonPropertyName("hyperdrive_rating")]
         [Precision(5, 2)]
-        public decimal HyperdriveRating { get; set; }
+        [JsonPropertyName("hyperdrive_rating")]
+        [JsonConverter(typeof(NullableDecimalConverter))]
+        public decimal? HyperdriveRating { get; set; } = null;
 
         [JsonPropertyName("MGLT")]
         public int? MGLT { get; set; } = null;
