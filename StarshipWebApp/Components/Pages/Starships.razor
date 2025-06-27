@@ -13,8 +13,9 @@
     </Match>
 
     <NotMatch>
-        <MudDataGrid T="Starship" MultiSelection="true" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickFilter"
-                     Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" SelectedItemsChanged="@SelectedItemsChanged" Style="clear:both;">
+        <MudDataGrid T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickFilter"
+                     Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" Striped="true" Hover="true" 
+                      SelectedItemsChanged="@SelectedItemsChanged" Style="clear:both;">
             <ToolBarContent>
                 <MudText Typo="MudBlazor.Typo.h6">Starships</MudText>
                 <MudSpacer />
@@ -22,13 +23,12 @@
                               AdornmentIcon="@MudBlazor.Icons.Material.Filled.Search" IconSize="MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
             </ToolBarContent>
             <Columns>
-                <SelectColumn T="Starship" />
                 <PropertyColumn Property="x => x.Name" Title="Name" Sortable="true" Filterable="true" />
                 <PropertyColumn Property="x => x.Model" Title="Model" Sortable="true" Filterable="true" />
                 <PropertyColumn Property="x => x.Manufacturer" Sortable="true" Filterable="true" />
-                <PropertyColumn Property="x => x.CostInCredits" Title="Cost in Credits" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.StarshipClass" Title="StarshipClass" Sortable="true" Filterable="true" />
                 <PropertyColumn Property="x => x.Length" Title="Length" Sortable="true" Filterable="true" />
-                <PropertyColumn Property="x => x.CargoCapacity" Title="Category Capacity" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.CargoCapacity" Title="Cargo Capacity" Sortable="true" Filterable="true" />
             </Columns>
             <PagerContent>
                 <MudDataGridPager T="Starship" />
