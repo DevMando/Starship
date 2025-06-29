@@ -30,7 +30,14 @@
                         <RadzenTextBox @bind-Value="starship.Manufacturer" Change="OnChange" Style="width:100%" Name="Manufacturer" />
 
                         <RadzenLabel Text="Starship Class" />
-                        <RadzenTextBox @bind-Value="starship.StarshipClass" Change="OnChange" Style="width:100%" Name="StarshipClass" />
+                        <RadzenAutoComplete Data="@_starshipClasses"
+                                            @bind-Value="starship.StarshipClass"
+                                            Placeholder="Select or type class"
+                                            FilterOperator="StringFilterOperator.Contains"
+                                            AllowCustom="true"
+                                            Change="@(args => OnChange(args))"
+                                            Style="width:100%"
+                                            Name="StarshipClass" />
                     </RadzenFieldset>
 
                     <RadzenFieldset Text="Crew & Passenger Info" Style="margin-top: 20px;">
@@ -85,7 +92,22 @@
 @code {
 
     [Parameter] public Starship? starship { get; set; } = null;
-    private bool _isDirty = false; 
+    private List<string> _starshipClasses = new List<string>();
+    private bool _isDirty = false;
+
+    protected override void OnInitialized()
+    {
+        if (starship == null)
+        {
+            starship = new Starship();
+        }
+        _starshipClasses = DbContext.Starships.Select(s => s.StarshipClass).Distinct().ToList();
+        _isDirty = false; // Reset dirty state on initialization
+
+        base.OnInitialized();
+    }
+
+  
 
     private async Task OnSubmit()
     {
