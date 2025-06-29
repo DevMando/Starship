@@ -5,13 +5,15 @@
         <MudButton StartIcon="@Icons.Material.Filled.AddBox" Color="Color.Surface">Create</MudButton>
     </MudTooltip>
     <MudTooltip Text="Edit a Starship" Placement="Placement.Top " Color="Color.Info" Arrow="true">
-        <MudButton StartIcon="@Icons.Material.Filled.Edit" Color="@Color.Info">Edit</MudButton>
+        <MudButton StartIcon="@Icons.Material.Filled.Edit" Color="@Color.Info" Disabled="@(SelectedStarship is null)">Edit</MudButton>
     </MudTooltip>
     <MudTooltip Text="Delete a Starship" Placement="Placement.Top" Color="Color.Info" Arrow="true">
-        <MudButton StartIcon="@Icons.Material.Filled.Delete" Color="@Color.Error">Delete</MudButton>
+        <MudButton StartIcon="@Icons.Material.Filled.Delete" Color="@Color.Error" Disabled="@(SelectedStarship is null)">Delete</MudButton>
     </MudTooltip>
 </MudButtonGroup>
 
 @code {
+    [Parameter]
+    public Starship? SelectedStarship { get; set; }
 
 }

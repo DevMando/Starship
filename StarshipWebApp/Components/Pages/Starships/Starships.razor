@@ -3,9 +3,19 @@
 @using MudBlazor
 @using Microsoft.EntityFrameworkCore
 @using PrettyBlazor
-@using StarshipWebApp.Components.Pages.Starships    
+@using StarshipWebApp.Components.Pages.Starships
 @inject StarshipWebApp.Data.StarWarsContext StarWarsContext
 
+
+<style>
+    .mud-table-row {
+        cursor: pointer;
+    }
+
+    .mud-selected-row {
+        background-color: rgba(0, 123, 255, 0.1)!important;
+    }
+</style>
 
 <Condition Evaluation="_isLoading">
 
@@ -15,11 +25,12 @@
 
     <NotMatch>
 
-        <StarshipCrudButtons/>
+
+        <StarshipActionPanel SelectedStarship="selectedStarship" />
 
         <MudDataGrid T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickSearch"
-                     Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" Striped="true" Hover="true"
-                     SelectedItemsChanged="@SelectedItemsChanged" Style="clear:both;">
+                     Hideable="true" Striped="true" Hover="false" 
+                     RowClick="@RowClicked" RowClassFunc="RowClass" SelectedItem="@selectedStarship" Style="clear:both;">
             <ToolBarContent>
                 <MudText Typo="MudBlazor.Typo.h6">Starships</MudText>
                 <MudSpacer />
@@ -51,6 +62,7 @@
     private string SearchText = string.Empty;
     private bool _sortNameByLength;
     private bool _isLoading = true;
+    Starship? selectedStarship;
 
     protected override async Task OnInitializedAsync()
     {
@@ -81,20 +93,17 @@
             || (starship.Manufacturer?.ToLowerInvariant().Contains(search) ?? false);
     }
 
-    // TODO: Click Events for CRUD.
-    void RowClicked(MudBlazor.DataGridRowClickEventArgs<Starship> args)
+   
+    private string RowClass(Starship row, int index)
     {
-
+        return row == selectedStarship ? "mud-selected-row" : string.Empty;
     }
 
-    void RowRightClicked(MudBlazor.DataGridRowClickEventArgs<Starship> args)
+    void RowClicked(DataGridRowClickEventArgs<Starship> args)
     {
-
+        if (selectedStarship == args.Item)
+            selectedStarship = null;
+        else
+            selectedStarship = args.Item;
     }
-
-    void SelectedItemsChanged(HashSet<Starship> items)
-    {
-
-    }
-
 }
