@@ -4,6 +4,7 @@
 @using StarshipWebApp.Data
 @using StarshipWebApp.Models
 @using Microsoft.EntityFrameworkCore
+@using StarshipWebApp.Components.Pages.Starships.Formatters
 @rendermode InteractiveServer
 @inject NavigationManager NavigationManager
 @inject StarWarsContext DbContext
@@ -44,22 +45,25 @@
                         <RadzenLabel Text="Crew" />
                         <RadzenTextBox @bind-Value="starship.Crew" Change="OnChange" Style="width:100%" Name="Crew" />
 
-                        <RadzenLabel Text="Passengers" />
-                        <RadzenNumeric @bind-Value="starship.Passengers" Change="@((int? value) => OnChange(value))" Name="Passengers" Style="width:100%" />
+                        <FormattedNumericInput Label="Passengers"
+                                               Name="Passengers"
+                                               @bind-Value="starship.Passengers"
+                                               Change="@((int? value) => OnChange(value))" />
                     </RadzenFieldset>
                 </RadzenColumn>
 
                 <!-- Right Column -->
                 <RadzenColumn Width="50%">
                     <RadzenFieldset Text="Performance Specs">
-                        <RadzenLabel Text="Max Speed (Atmospheric)" />
-                        <RadzenNumeric @bind-Value="starship.MaxAtmospheringSpeed" Change="@((int? value) => OnChange(value))" Name="MaxAtmospheringSpeed" Style="width:100%" />
 
-                        <RadzenLabel Text="Hyperdrive Rating" />
+                        <FormattedNumericInput Label="Max Speed (Atmospheric)"
+                                               Name="MaxAtmospheringSpeed"
+                                               @bind-Value="starship.MaxAtmospheringSpeed"
+                                               Change="@((int? value) => OnChange(value))" />
 
                         <div style="display: flex; align-items: center; gap: 12px;">
                             <RadzenSlider @bind-Value="starship.HyperdriveRating"
-                                          Min="1"
+                                          Min="0"
                                           Max="10"
                                           Step="0.1"
                                           Name="HyperdriveRating"
@@ -72,19 +76,21 @@
                             <RadzenBadge Text="@($"{starship.HyperdriveRating:0.0}")" Style="min-width: 40px;" />
                         </div>
 
-                        <RadzenLabel Text="Speed (MGLT)" />
-                        <RadzenNumeric @bind-Value="starship.MGLT" Change="@((int? value) => OnChange(value))" Name="MGLT" Style="width:100%" />
+                        <FormattedNumericInput Label="Speed (MGLT)"
+                                               Name="MGLT"
+                                               @bind-Value="starship.MGLT"
+                                               Change="@((int? value) => OnChange(value))" />
 
                         <RadzenLabel Text="Length (meters)" />
                         <RadzenTextBox @bind-Value="starship.Length" @onchange="OnChange" Style="width:100%" Name="Length" />
                     </RadzenFieldset>
 
                     <RadzenFieldset Text="Cargo & Capacity" Style="margin-top: 20px;">
-                        <RadzenLabel Text="Cost (Credits)" />
-                        <RadzenNumeric @bind-Value="starship.CostInCredits" Change="@((long? value) => OnChange(value))" Name="CostInCredits" Style="width:100%" />
+                    <FormattedNumericInput Label="Cargo Capacity (kg)"
+                       Name="CargoCapacity"
+                       @bind-Value="starship.CargoCapacity"
+                       Change="@((long? value) => OnChange(value))" />
 
-                        <RadzenLabel Text="Cargo Capacity (kg)" />
-                        <RadzenNumeric @bind-Value="starship.CargoCapacity" Change="@((long? value) => OnChange(value))" Name="CargoCapacity" Style="width:100%" />
 
                         <RadzenLabel Text="Consumables (Duration)" />
                         <RadzenTextBox @bind-Value="starship.Consumables" @onchange="OnChange" Style="width:100%" Name="Consumables" />
@@ -121,7 +127,7 @@
         base.OnInitialized();
     }
 
-  
+
 
     private async Task OnSubmit()
     {
