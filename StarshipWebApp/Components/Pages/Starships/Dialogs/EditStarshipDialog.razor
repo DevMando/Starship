@@ -24,21 +24,21 @@
                         <RadzenTextBox @bind-Value="starship.Name" Change="OnChange" Style="width:100%" Name="Name" />
 
                         <RadzenLabel Text="Model" />
-                        <RadzenTextBox @bind-Value="starship.Model" @onchange="OnChange" Style="width:100%" Name="Model" />
+                        <RadzenTextBox @bind-Value="starship.Model" Change="OnChange" Style="width:100%" Name="Model" />
 
                         <RadzenLabel Text="Manufacturer" />
-                        <RadzenTextBox @bind-Value="starship.Manufacturer" @onchange="OnChange" Style="width:100%" Name="Manufacturer" />
+                        <RadzenTextBox @bind-Value="starship.Manufacturer" Change="OnChange" Style="width:100%" Name="Manufacturer" />
 
                         <RadzenLabel Text="Starship Class" />
-                        <RadzenTextBox @bind-Value="starship.StarshipClass" @onchange="OnChange" Style="width:100%" Name="StarshipClass" />
+                        <RadzenTextBox @bind-Value="starship.StarshipClass" Change="OnChange" Style="width:100%" Name="StarshipClass" />
                     </RadzenFieldset>
 
                     <RadzenFieldset Text="Crew & Passenger Info" Style="margin-top: 20px;">
                         <RadzenLabel Text="Crew" />
-                        <RadzenTextBox @bind-Value="starship.Crew" @onchange="OnChange" Style="width:100%" Name="Crew" />
+                        <RadzenTextBox @bind-Value="starship.Crew" Change="OnChange" Style="width:100%" Name="Crew" />
 
                         <RadzenLabel Text="Passengers" />
-                        <RadzenNumeric @bind-Value="starship.Passengers" @onchange="OnChange" Name="Passengers" Style="width:100%" />
+                        <RadzenNumeric @bind-Value="starship.Passengers" Change="@((int? value) => OnChange(value))" Name="Passengers" Style="width:100%" />
                     </RadzenFieldset>
                 </RadzenColumn>
 
@@ -46,13 +46,13 @@
                 <RadzenColumn Width="50%">
                     <RadzenFieldset Text="Performance Specs">
                         <RadzenLabel Text="Max Speed (Atmospheric)" />
-                        <RadzenNumeric @bind-Value="starship.MaxAtmospheringSpeed" @onchange="OnChange" Name="MaxAtmospheringSpeed" Style="width:100%" />
+                        <RadzenNumeric @bind-Value="starship.MaxAtmospheringSpeed" Change="@((int? value) => OnChange(value))" Name="MaxAtmospheringSpeed" Style="width:100%" />
 
                         <RadzenLabel Text="Hyperdrive Rating" />
-                        <RadzenNumeric @bind-Value="starship.HyperdriveRating" @onchange="OnChange" Step="0.01" Name="HyperdriveRating" Style="width:100%" />
+                        <RadzenNumeric @bind-Value="starship.HyperdriveRating" Change="@((decimal? value) => OnChange(value))" Step="0.01" Name="HyperdriveRating" Style="width:100%" />
 
                         <RadzenLabel Text="Speed (MGLT)" />
-                        <RadzenNumeric @bind-Value="starship.MGLT" @onchange="OnChange" Name="MGLT" Style="width:100%" />
+                        <RadzenNumeric @bind-Value="starship.MGLT" Change="@((int? value) => OnChange(value))" Name="MGLT" Style="width:100%" />
 
                         <RadzenLabel Text="Length (meters)" />
                         <RadzenTextBox @bind-Value="starship.Length" @onchange="OnChange" Style="width:100%" Name="Length" />
@@ -60,10 +60,10 @@
 
                     <RadzenFieldset Text="Cargo & Capacity" Style="margin-top: 20px;">
                         <RadzenLabel Text="Cost (Credits)" />
-                        <RadzenNumeric @bind-Value="starship.CostInCredits" @onchange="OnChange" Name="CostInCredits" Style="width:100%" />
+                        <RadzenNumeric @bind-Value="starship.CostInCredits" Change="@((long? value) => OnChange(value))" Name="CostInCredits" Style="width:100%" />
 
                         <RadzenLabel Text="Cargo Capacity (kg)" />
-                        <RadzenNumeric @bind-Value="starship.CargoCapacity" @onchange="OnChange" Name="CargoCapacity" Style="width:100%" />
+                        <RadzenNumeric @bind-Value="starship.CargoCapacity" Change="@((long? value) => OnChange(value))" Name="CargoCapacity" Style="width:100%" />
 
                         <RadzenLabel Text="Consumables (Duration)" />
                         <RadzenTextBox @bind-Value="starship.Consumables" @onchange="OnChange" Style="width:100%" Name="Consumables" />
@@ -95,8 +95,9 @@
         RadzenDialogService.Close(starship);
     }
 
-    private void OnChange()
+    private void OnChange(object? value)
     {
         _isDirty = true;
     }
+
 }
