@@ -56,7 +56,21 @@
                         <RadzenNumeric @bind-Value="starship.MaxAtmospheringSpeed" Change="@((int? value) => OnChange(value))" Name="MaxAtmospheringSpeed" Style="width:100%" />
 
                         <RadzenLabel Text="Hyperdrive Rating" />
-                        <RadzenNumeric @bind-Value="starship.HyperdriveRating" Change="@((decimal? value) => OnChange(value))" Step="0.01" Name="HyperdriveRating" Style="width:100%" />
+
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <RadzenSlider @bind-Value="starship.HyperdriveRating"
+                                          Min="1"
+                                          Max="10"
+                                          Step="0.1"
+                                          Name="HyperdriveRating"
+                                          Change="@((decimal? value) => OnChange(value))"
+                                          Style="flex-grow: 1;"
+                                          ShowTicks="true"
+                                          TicksStep="1"
+                                          TValue="decimal?" />
+
+                            <RadzenBadge Text="@($"{starship.HyperdriveRating:0.0}")" Style="min-width: 40px;" />
+                        </div>
 
                         <RadzenLabel Text="Speed (MGLT)" />
                         <RadzenNumeric @bind-Value="starship.MGLT" Change="@((int? value) => OnChange(value))" Name="MGLT" Style="width:100%" />
