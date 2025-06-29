@@ -1,0 +1,17 @@
+﻿@using MudBlazor
+
+<MudButtonGroup Color="Color.Surface" Variant="Variant.Filled">
+    <MudTooltip Text="Create a new Starship" Placement="Placement.Top" Color="Color.Info" Arrow="true">
+        <MudButton StartIcon="@Icons.Material.Filled.AddBox" Color="Color.Surface">Create</MudButton>
+    </MudTooltip>
+    <MudTooltip Text="Edit a Starship" Placement="Placement.Top " Color="Color.Info" Arrow="true">
+        <MudButton StartIcon="@Icons.Material.Filled.Edit" Color="@Color.Info">Edit</MudButton>
+    </MudTooltip>
+    <MudTooltip Text="Delete a Starship" Placement="Placement.Top" Color="Color.Info" Arrow="true">
+        <MudButton StartIcon="@Icons.Material.Filled.Delete" Color="@Color.Error">Delete</MudButton>
+    </MudTooltip>
+</MudButtonGroup>
+
+@code {
+
+}

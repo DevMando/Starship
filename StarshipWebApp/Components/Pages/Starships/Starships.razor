@@ -3,6 +3,7 @@
 @using MudBlazor
 @using Microsoft.EntityFrameworkCore
 @using PrettyBlazor
+@using StarshipWebApp.Components.Pages.Starships    
 @inject StarshipWebApp.Data.StarWarsContext StarWarsContext
 
 
@@ -13,12 +14,16 @@
     </Match>
 
     <NotMatch>
+
+        <StarshipCrudButtons/>
+
         <MudDataGrid T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickSearch"
                      Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" Striped="true" Hover="true"
                      SelectedItemsChanged="@SelectedItemsChanged" Style="clear:both;">
             <ToolBarContent>
                 <MudText Typo="MudBlazor.Typo.h6">Starships</MudText>
                 <MudSpacer />
+
                 <MudTextField @bind-Value="SearchText" Placeholder="Search" Adornment="MudBlazor.Adornment.Start" Immediate="true"
                               AdornmentIcon="@MudBlazor.Icons.Material.Filled.Search" IconSize="MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
             </ToolBarContent>
