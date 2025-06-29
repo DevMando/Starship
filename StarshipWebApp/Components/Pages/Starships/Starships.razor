@@ -4,7 +4,8 @@
 @using Microsoft.EntityFrameworkCore
 @using PrettyBlazor
 @using StarshipWebApp.Components.Pages.Starships
-@inject StarshipWebApp.Data.StarWarsContext StarWarsContext
+@using StarshipWebApp.Data
+@inject StarWarsContext StarWarsContext
 
 
 <style>
@@ -13,7 +14,8 @@
     }
 
     .mud-selected-row {
-        background-color: rgba(0, 123, 255, 0.1)!important;
+        background-color: rgba(251, 137, 131, 0.8)!important;
+        
     }
 </style>
 
@@ -26,7 +28,7 @@
     <NotMatch>
 
 
-        <StarshipActionPanel SelectedStarship="selectedStarship" />
+        <StarshipActionPanel SelectedStarship="selectedStarship" UpdateStarships="GetStarshipsAsync" />
 
         <MudDataGrid T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickSearch"
                      Hideable="true" Striped="true" Hover="false" 
