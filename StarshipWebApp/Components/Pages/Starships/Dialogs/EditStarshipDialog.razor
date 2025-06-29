@@ -11,8 +11,9 @@
 
 <PageTitle>Starship Editor</PageTitle>
 
+<RadzenBadge Text="Unsaved Changes" BadgeStyle="BadgeStyle.Success" Variant="Variant.Filled" Visible="_isDirty" />
+
 <RadzenTemplateForm Data="@starship" TItem="Starship" Submit="@OnSubmit">
-  
     <ChildContent>
         <RadzenCard>
             <RadzenRow>
@@ -20,7 +21,7 @@
                 <RadzenColumn Width="50%">
                     <RadzenFieldset Text="Basic Starship Details">
                         <RadzenLabel Text="Name" />
-                        <RadzenTextBox @bind-Value="starship.Name" @onchange="OnChange" Style="width:100%" Name="Name" />
+                        <RadzenTextBox @bind-Value="starship.Name" Change="OnChange" Style="width:100%" Name="Name" />
 
                         <RadzenLabel Text="Model" />
                         <RadzenTextBox @bind-Value="starship.Model" @onchange="OnChange" Style="width:100%" Name="Model" />
@@ -71,7 +72,10 @@
             </RadzenRow>
 
             <div style="margin-top: 20px;">
-                <RadzenButton Text="Save" ButtonType="ButtonType.Submit" Icon="save" Style="margin-right: 10px;" Disabled="!_isDirty" />
+                <MudBlazor.MudTooltip Text="@(_isDirty ? "Save Starship changes you have made" : "No Changes have been made to the Starship")" Placement="MudBlazor.Placement.Top" Color="MudBlazor.Color.Info" Arrow="true">
+                    <RadzenButton ButtonType="ButtonType.Submit" Text="Save" Icon="save" Style="margin-right: 10px;" Disabled="!_isDirty" />
+                </MudBlazor.MudTooltip>
+
                 <RadzenButton Text="Cancel" Click="() => RadzenDialogService.Close(null)" ButtonStyle="ButtonStyle.Secondary" />
             </div>
         </RadzenCard>
@@ -81,15 +85,7 @@
 @code {
 
     [Parameter] public Starship? starship { get; set; } = null;
-    private bool _isDirty = false;
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (starship is null)
-        {
-
-        }
-    }
+    private bool _isDirty = false; 
 
     private async Task OnSubmit()
     {
