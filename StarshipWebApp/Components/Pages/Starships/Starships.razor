@@ -3,8 +3,20 @@
 @using MudBlazor
 @using Microsoft.EntityFrameworkCore
 @using PrettyBlazor
-@inject StarshipWebApp.Data.StarWarsContext StarWarsContext
+@using StarshipWebApp.Components.Pages.Starships
+@using StarshipWebApp.Data
+@inject StarWarsContext StarWarsContext
 
+
+<style>
+    .mud-table-row {
+    cursor: pointer;
+    }
+
+    .mud-selected-row {
+    background-color: rgba(251, 137, 131, 0.8) !important;
+    }
+</style>
 
 <Condition Evaluation="_isLoading">
 
@@ -13,14 +25,18 @@
     </Match>
 
     <NotMatch>
+
+        <StarshipActionPanel SelectedStarship="selectedStarship" UpdateStarships="GetStarshipsAsync" />
+
         <MudDataGrid T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickSearch"
-                     Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" Striped="true" Hover="true"
-                     SelectedItemsChanged="@SelectedItemsChanged" Style="clear:both;">
+        Hideable="true" Striped="true" Hover="false"
+        RowClick="@RowClicked" RowClassFunc="RowClass" SelectedItem="@selectedStarship" Style="clear:both;">
             <ToolBarContent>
                 <MudText Typo="MudBlazor.Typo.h6">Starships</MudText>
                 <MudSpacer />
+
                 <MudTextField @bind-Value="SearchText" Placeholder="Search" Adornment="MudBlazor.Adornment.Start" Immediate="true"
-                              AdornmentIcon="@MudBlazor.Icons.Material.Filled.Search" IconSize="MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
+                AdornmentIcon="@MudBlazor.Icons.Material.Filled.Search" IconSize="MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Name" Title="Name" Sortable="true" Filterable="true" />
@@ -42,22 +58,45 @@
 
 @code {
 
-    private IEnumerable<Starship> StarshipList;
+    private List<Starship> StarshipList = new List<Starship>();
     private string SearchText = string.Empty;
     private bool _sortNameByLength;
     private bool _isLoading = true;
+    Starship? selectedStarship;
 
     protected override async Task OnInitializedAsync()
     {
         await GetStarshipsAsync();
     }
 
-    private async Task GetStarshipsAsync()
+    private async Task GetStarshipsAsync(Starship? starship = null)
     {
-        _isLoading = true;
-        StarshipList = await StarWarsContext.Starships.ToListAsync();
-        _isLoading = false;
-        StateHasChanged();
+        // If a specific starship is provided, we can skip loading the entire list
+        if (starship is null)
+        {
+            _isLoading = true;
+            StarshipList = await StarWarsContext.Starships.ToListAsync();
+            _isLoading = false;
+            StateHasChanged();
+        }
+        else
+        {
+            var starshipInList = StarshipList.FirstOrDefault(s => s.Id == starship.Id);
+
+            if (starshipInList is not null)
+            {
+                // Update the starship in the list.
+                starshipInList = starship;
+            }
+            else
+            {
+                // Add new starship to the list.
+                StarshipList.Add(starship);
+                SearchText = starship.Name;
+            }
+
+            StateHasChanged();
+        }
     }
 
 
@@ -76,20 +115,17 @@
             || (starship.Manufacturer?.ToLowerInvariant().Contains(search) ?? false);
     }
 
-    // TODO: Click Events for CRUD.
-    void RowClicked(MudBlazor.DataGridRowClickEventArgs<Starship> args)
-    {
 
+    private string RowClass(Starship row, int index)
+    {
+        return row == selectedStarship ? "mud-selected-row" : string.Empty;
     }
 
-    void RowRightClicked(MudBlazor.DataGridRowClickEventArgs<Starship> args)
+    void RowClicked(DataGridRowClickEventArgs<Starship> args)
     {
-
+        if (selectedStarship == args.Item)
+            selectedStarship = null;
+        else
+            selectedStarship = args.Item;
     }
-
-    void SelectedItemsChanged(HashSet<Starship> items)
-    {
-
-    }
-
 }
