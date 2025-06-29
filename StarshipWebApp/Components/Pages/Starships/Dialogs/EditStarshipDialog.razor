@@ -1,0 +1,106 @@
+﻿@page "/starships/edit/{Id:int}"
+@using Radzen
+@using Radzen.Blazor
+@using StarshipWebApp.Data
+@using StarshipWebApp.Models
+@using Microsoft.EntityFrameworkCore
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+@inject StarWarsContext DbContext
+@inject Radzen.DialogService RadzenDialogService
+
+<PageTitle>Starship Editor</PageTitle>
+
+<RadzenTemplateForm Data="@starship" TItem="Starship" Submit="@OnSubmit">
+  
+    <ChildContent>
+        <RadzenCard>
+            <RadzenRow>
+                <!-- Left Column -->
+                <RadzenColumn Width="50%">
+                    <RadzenFieldset Text="Basic Starship Details">
+                        <RadzenLabel Text="Name" />
+                        <RadzenTextBox @bind-Value="starship.Name" @onchange="OnChange" Style="width:100%" Name="Name" />
+
+                        <RadzenLabel Text="Model" />
+                        <RadzenTextBox @bind-Value="starship.Model" @onchange="OnChange" Style="width:100%" Name="Model" />
+
+                        <RadzenLabel Text="Manufacturer" />
+                        <RadzenTextBox @bind-Value="starship.Manufacturer" @onchange="OnChange" Style="width:100%" Name="Manufacturer" />
+
+                        <RadzenLabel Text="Starship Class" />
+                        <RadzenTextBox @bind-Value="starship.StarshipClass" @onchange="OnChange" Style="width:100%" Name="StarshipClass" />
+                    </RadzenFieldset>
+
+                    <RadzenFieldset Text="Crew & Passenger Info" Style="margin-top: 20px;">
+                        <RadzenLabel Text="Crew" />
+                        <RadzenTextBox @bind-Value="starship.Crew" @onchange="OnChange" Style="width:100%" Name="Crew" />
+
+                        <RadzenLabel Text="Passengers" />
+                        <RadzenNumeric @bind-Value="starship.Passengers" @onchange="OnChange" Name="Passengers" Style="width:100%" />
+                    </RadzenFieldset>
+                </RadzenColumn>
+
+                <!-- Right Column -->
+                <RadzenColumn Width="50%">
+                    <RadzenFieldset Text="Performance Specs">
+                        <RadzenLabel Text="Max Speed (Atmospheric)" />
+                        <RadzenNumeric @bind-Value="starship.MaxAtmospheringSpeed" @onchange="OnChange" Name="MaxAtmospheringSpeed" Style="width:100%" />
+
+                        <RadzenLabel Text="Hyperdrive Rating" />
+                        <RadzenNumeric @bind-Value="starship.HyperdriveRating" @onchange="OnChange" Step="0.01" Name="HyperdriveRating" Style="width:100%" />
+
+                        <RadzenLabel Text="Speed (MGLT)" />
+                        <RadzenNumeric @bind-Value="starship.MGLT" @onchange="OnChange" Name="MGLT" Style="width:100%" />
+
+                        <RadzenLabel Text="Length (meters)" />
+                        <RadzenTextBox @bind-Value="starship.Length" @onchange="OnChange" Style="width:100%" Name="Length" />
+                    </RadzenFieldset>
+
+                    <RadzenFieldset Text="Cargo & Capacity" Style="margin-top: 20px;">
+                        <RadzenLabel Text="Cost (Credits)" />
+                        <RadzenNumeric @bind-Value="starship.CostInCredits" @onchange="OnChange" Name="CostInCredits" Style="width:100%" />
+
+                        <RadzenLabel Text="Cargo Capacity (kg)" />
+                        <RadzenNumeric @bind-Value="starship.CargoCapacity" @onchange="OnChange" Name="CargoCapacity" Style="width:100%" />
+
+                        <RadzenLabel Text="Consumables (Duration)" />
+                        <RadzenTextBox @bind-Value="starship.Consumables" @onchange="OnChange" Style="width:100%" Name="Consumables" />
+                    </RadzenFieldset>
+                </RadzenColumn>
+            </RadzenRow>
+
+            <div style="margin-top: 20px;">
+                <RadzenButton Text="Save" ButtonType="ButtonType.Submit" Icon="save" Style="margin-right: 10px;" Disabled="!_isDirty" />
+                <RadzenButton Text="Cancel" Click="() => RadzenDialogService.Close(null)" ButtonStyle="ButtonStyle.Secondary" />
+            </div>
+        </RadzenCard>
+    </ChildContent>
+</RadzenTemplateForm>
+
+@code {
+
+    [Parameter] public Starship? starship { get; set; } = null;
+    private bool _isDirty = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (starship is null)
+        {
+
+        }
+    }
+
+    private async Task OnSubmit()
+    {
+        starship.UpdatedDate = DateTime.Now;
+        DbContext.Update(starship);
+        await DbContext.SaveChangesAsync();
+        RadzenDialogService.Close(starship);
+    }
+
+    private void OnChange()
+    {
+        _isDirty = true;
+    }
+}
