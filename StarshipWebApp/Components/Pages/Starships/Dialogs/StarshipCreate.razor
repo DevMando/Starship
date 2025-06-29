@@ -30,6 +30,7 @@
                     <RadzenFieldset Text="Basic Starship Details">
                         <RadzenLabel Text="Name" />
                         <RadzenTextBox @bind-Value="starship.Name" Style="width:100%" />
+                        <RadzenRequiredValidator Component="Name" Text="Starship Name is required" Popup=@popup Style="position: absolute" />
 
                         <RadzenLabel Text="Model" />
                         <RadzenTextBox @bind-Value="starship.Model"Style="width:100%" />
@@ -65,8 +66,8 @@
                                                @bind-Value="starship.MaxAtmospheringSpeed"
                                                 />
 
-                        <RadzenLabel Text="Hyperdrive Rating" />
-                        <div style="display: flex; align-items: center; gap: 12px;">
+                        <RadzenLabel Text="Hyperdrive Rating" Style="margin-top:14px;" />
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom:14px;">
                             <RadzenSlider @bind-Value="starship.HyperdriveRating"
                                           Min="0"
                                           Max="10"
@@ -145,7 +146,7 @@
     private int currentStep = 0;
     private List<string> _starshipClasses = new();
     private List<string> _starshipManufacturers = new();
-
+    bool popup;
 
     protected override async Task OnInitializedAsync()
     {

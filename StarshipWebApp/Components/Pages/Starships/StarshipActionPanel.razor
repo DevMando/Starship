@@ -19,13 +19,14 @@
     </MudTooltip>
 </MudButtonGroup>
 
+
 @code {
 
     [Parameter]
     public Starship? SelectedStarship { get; set; }
 
     [Parameter]
-    public EventCallback UpdateStarships { get; set; }
+    public EventCallback<Starship?> UpdateStarships { get; set; }
 
     protected async Task DeleteStarship()
     {
@@ -63,7 +64,7 @@
                 Top = "10px",
                 Width = "1200px",
             };
-        
+
         // The Edit dialog will always return a starhip/null value. starships types will indicate a new or edited starship has been returned.
         var editedStarshipResult = await DialogService.OpenAsync<StarshipEdit>($"Starship View/Edit", dialogParams, dialogOptions);
 
@@ -71,7 +72,7 @@
         {
             // If a starship was returned, it means the user edited an existing starship or created a new one. The datagrid will be refreshed.
             await UpdateStarships.InvokeAsync();
-        }      
+        }
     }
 
     protected async Task CreateStarship()
@@ -88,7 +89,7 @@
 
         if (editedStarshipResult is not null)
         {
-            // If a starship was returned, it means the user edited an existing starship or created a new one. The datagrid will be refreshed.
+            // If a starship was returned, it means the user created a new Starship. The datagrid will be refreshed.
             await UpdateStarships.InvokeAsync();
         }
     }
