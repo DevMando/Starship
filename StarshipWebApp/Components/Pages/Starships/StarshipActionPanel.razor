@@ -9,7 +9,7 @@
 
 <MudButtonGroup Color="Color.Surface" Variant="MudBlazor.Variant.Filled">
     <MudTooltip Text="Create a new Starship" Placement="Placement.Top" Color="Color.Info" Arrow="true">
-        <MudButton StartIcon="@Icons.Material.Filled.AddBox" Color="Color.Surface">Create</MudButton>
+        <MudButton OnClick="CreateStarship" StartIcon="@Icons.Material.Filled.AddBox" Color="Color.Surface">Create</MudButton>
     </MudTooltip>
     <MudTooltip Text="@(SelectedStarship is not null ? "Edit Starship" : "Click on a Starship to Edit")" Placement="Placement.Top " Color="Color.Info" Arrow="true">
         <MudButton OnClick="EditStarship" StartIcon="@Icons.Material.Filled.Edit" Color="@Color.Info" Disabled="@(SelectedStarship is null)">Edit</MudButton>
@@ -40,7 +40,7 @@
                 Top = "10px",
             };
 
-        var dialogResult = await DialogService.OpenAsync<DeleteStarshipDialog>($"Confirm Deletion", dialogParams, dialogOptions);
+        var dialogResult = await DialogService.OpenAsync<StarshipDelete>($"Confirm Deletion", dialogParams, dialogOptions);
 
         if (dialogResult)
         {
@@ -65,12 +65,31 @@
             };
         
         // The Edit dialog will always return a starhip/null value. starships types will indicate a new or edited starship has been returned.
-        var editedStarshipResult = await DialogService.OpenAsync<EditStarshipDialog>($"Starship View/Edit", dialogParams, dialogOptions);
+        var editedStarshipResult = await DialogService.OpenAsync<StarshipEdit>($"Starship View/Edit", dialogParams, dialogOptions);
 
         if (editedStarshipResult is not null)
         {
             // If a starship was returned, it means the user edited an existing starship or created a new one. The datagrid will be refreshed.
             await UpdateStarships.InvokeAsync();
         }      
+    }
+
+    protected async Task CreateStarship()
+    {
+        var dialogOptions = new Radzen.DialogOptions
+            {
+                ShowClose = true,
+                Top = "10px",
+                Width = "1200px",
+            };
+
+        // The Edit dialog will always return a starhip/null value. starships types will indicate a new or edited starship has been returned.
+        var editedStarshipResult = await DialogService.OpenAsync<StarshipCreate>($"Starship Creator", null, dialogOptions) ?? null;
+
+        if (editedStarshipResult is not null)
+        {
+            // If a starship was returned, it means the user edited an existing starship or created a new one. The datagrid will be refreshed.
+            await UpdateStarships.InvokeAsync();
+        }
     }
 }
