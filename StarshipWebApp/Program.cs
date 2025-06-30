@@ -58,7 +58,7 @@ app.MapGet("/google-login", async (HttpContext httpContext) =>
 {
     await httpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties
     {
-        RedirectUri = "/"
+        RedirectUri = "/Home"
     });
 });
 

@@ -1,11 +1,14 @@
-﻿@page "/Login"
+﻿@page "/"
+@page "/Login"
 @page "/Login/{status:int}"
 @using Radzen
 @using Radzen.Blazor
 
+
 <link href="~/css/site.css" rel="stylesheet" />
+
 <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center">
-    <img src="./images/MemeHunterLogo.png" style="height:520px;" />
+    <img src="./images/starshiplogo.png" style="height:540px;" />
 
     <GoogleSignInButton />
 
@@ -15,8 +18,6 @@
         </Match>
     </PrettyBlazor.Condition>
 </RadzenStack>
-
-
 
 
 @code {
