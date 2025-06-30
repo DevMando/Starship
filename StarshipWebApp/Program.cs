@@ -4,11 +4,10 @@ using MudBlazor.Services;
 using StarshipWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using StarshipWebApp.Services;
-using MudBlazor;
-using Radzen.Blazor;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +34,8 @@ builder.Services.AddHttpClient<SwapiService>();
 
 
 // Authentication and Authorization
+builder.Services.AddAuthorizationCore();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
