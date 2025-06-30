@@ -50,6 +50,7 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
+app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -76,7 +77,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
