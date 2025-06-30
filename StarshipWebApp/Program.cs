@@ -53,18 +53,18 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // Authentication/Authorization Endpoints.
-app.MapGet("/login", async (HttpContext httpContext) =>
+app.MapGet("/google-login", async (HttpContext httpContext) =>
 {
     await httpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties
     {
-        RedirectUri = "/SignIn"
+        RedirectUri = "/"
     });
 });
 
 app.MapGet("/logout", async (HttpContext httpContext) =>
 {
     await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-    httpContext.Response.Redirect("/SignIn");
+    httpContext.Response.Redirect("/SignIn/1");
 });
 
 // Configure the HTTP request pipeline.
