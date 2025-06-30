@@ -9,21 +9,25 @@
 <MudSnackbarProvider @rendermode="InteractiveServer" />
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+    <AuthorizeView>
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+    </AuthorizeView>
+
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
-
+        <AuthorizeView>
+            <div class="top-row px-4">
+                <a href="/logout" target="_blank">Logout</a>
+            </div>
+        </AuthorizeView>
         <article class="content px-4">
 
             @* RadzenProviders *@
             <RadzenDialog @rendermode="InteractiveServer" />
             <RadzenNotification @rendermode="InteractiveServer" />
-            <RadzenTooltip @rendermode="InteractiveServer"/>
+            <RadzenTooltip @rendermode="InteractiveServer" />
             <RadzenContextMenu @rendermode="InteractiveServer" />
 
             @Body

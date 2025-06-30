@@ -1,4 +1,5 @@
 ﻿@page "/starships/create"
+@attribute [Authorize]
 @using Radzen
 @using Radzen.Blazor
 @using StarshipWebApp.Data
@@ -155,17 +156,17 @@
 
     private async Task LoadAutoCompleteFieldLists()
     {
-        _starshipClasses = StarWarsContext.Starships
+        _starshipClasses = await StarWarsContext.Starships
             .Where(s => !string.IsNullOrEmpty(s.StarshipClass))
             .Select(s => s.StarshipClass)
             .Distinct()
-            .ToList();
+            .ToListAsync();
 
-        _starshipManufacturers = StarWarsContext.Starships
+        _starshipManufacturers = await StarWarsContext.Starships
         .Where(s => !string.IsNullOrEmpty(s.StarshipClass))
         .Select(s => s.Manufacturer)
         .Distinct()
-        .ToList();
+        .ToListAsync();
     }
 
     private async Task OnSubmit()

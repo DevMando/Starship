@@ -1,22 +1,15 @@
 ﻿@page "/Starships"
+@attribute [Authorize]
 @rendermode InteractiveServer
 @using MudBlazor
 @using Microsoft.EntityFrameworkCore
 @using PrettyBlazor
 @using StarshipWebApp.Components.Pages.Starships
 @using StarshipWebApp.Data
+@using StarshipWebApp.Models
 @inject StarWarsContext StarWarsContext
 
-
-<style>
-    .mud-table-row {
-    cursor: pointer;
-    }
-
-    .mud-selected-row {
-    background-color: rgba(251, 137, 131, 0.8) !important;
-    }
-</style>
+<link href="~/components.css" rel="stylesheet" />
 
 <Condition Evaluation="_isLoading">
 
@@ -60,7 +53,6 @@
 
     private List<Starship> StarshipList = new List<Starship>();
     private string SearchText = string.Empty;
-    private bool _sortNameByLength;
     private bool _isLoading = true;
     Starship? selectedStarship;
 

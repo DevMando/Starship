@@ -4,8 +4,10 @@ using MudBlazor.Services;
 using StarshipWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using StarshipWebApp.Services;
-using MudBlazor;
-using Radzen.Blazor;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +32,41 @@ builder.Services.AddDbContext<StarWarsContext>(options =>
 // API Services.
 builder.Services.AddHttpClient<SwapiService>();
 
+
+// Authentication and Authorization
+builder.Services.AddAuthorizationCore();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+})
+.AddCookie()
+.AddGoogle(options =>
+{
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+});
+
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+// Authentication/Authorization Endpoints.
+app.MapGet("/google-login", async (HttpContext httpContext) =>
+{
+    await httpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties
+    {
+        RedirectUri = "/Home"
+    });
+});
+
+app.MapGet("/logout", async (HttpContext httpContext) =>
+{
+    await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    httpContext.Response.Redirect("/Login/1");
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
