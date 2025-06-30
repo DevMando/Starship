@@ -1,0 +1,123 @@
+﻿@page "/Starships"
+@attribute [Authorize]
+@rendermode InteractiveServer
+@using MudBlazor
+@using Microsoft.EntityFrameworkCore
+@using PrettyBlazor
+@using StarshipWebApp.Components.Pages.Starships
+@using StarshipWebApp.Data
+@using StarshipWebApp.Models
+@inject StarWarsContext StarWarsContext
+
+<link href="~/components.css" rel="stylesheet" />
+
+<Condition Evaluation="_isLoading">
+
+    <Match>
+        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" Class="mud-loading-cirlce" />
+    </Match>
+
+    <NotMatch>
+
+        <StarshipActionPanel SelectedStarship="selectedStarship" UpdateStarships="GetStarshipsAsync" />
+
+        <MudDataGrid T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickSearch"
+        Hideable="true" Striped="true" Hover="false"
+        RowClick="@RowClicked" RowClassFunc="RowClass" SelectedItem="@selectedStarship" Style="clear:both;">
+            <ToolBarContent>
+                <MudText Typo="MudBlazor.Typo.h6">Starships</MudText>
+                <MudSpacer />
+
+                <MudTextField @bind-Value="SearchText" Placeholder="Search" Adornment="MudBlazor.Adornment.Start" Immediate="true"
+                AdornmentIcon="@MudBlazor.Icons.Material.Filled.Search" IconSize="MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Name" Title="Name" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.Model" Title="Model" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.Manufacturer" Title="Manufacturer" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.StarshipClass" Title="Starship Class" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.Length" Title="Length" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.CargoCapacity" Title="Cargo Capacity" Sortable="true" Filterable="true" />
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="Starship" />
+            </PagerContent>
+        </MudDataGrid>
+    </NotMatch>
+
+</Condition>
+
+
+
+@code {
+
+    private List<Starship> StarshipList = new List<Starship>();
+    private string SearchText = string.Empty;
+    private bool _isLoading = true;
+    Starship? selectedStarship;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetStarshipsAsync();
+    }
+
+    private async Task GetStarshipsAsync(Starship? starship = null)
+    {
+        // If a specific starship is provided, we can skip loading the entire list
+        if (starship is null)
+        {
+            _isLoading = true;
+            StarshipList = await StarWarsContext.Starships.ToListAsync();
+            _isLoading = false;
+            StateHasChanged();
+        }
+        else
+        {
+            var starshipInList = StarshipList.FirstOrDefault(s => s.Id == starship.Id);
+
+            if (starshipInList is not null)
+            {
+                // Update the starship in the list.
+                starshipInList = starship;
+            }
+            else
+            {
+                // Add new starship to the list.
+                StarshipList.Add(starship);
+                SearchText = starship.Name;
+            }
+
+            StateHasChanged();
+        }
+    }
+
+
+
+    // Quick filter - filter globally across multiple columns with the same input
+    private bool QuickSearch(Starship starship)
+    {
+        if (string.IsNullOrWhiteSpace(SearchText))
+            return true;
+
+        var search = SearchText.Trim().ToLowerInvariant();
+
+        return (starship.Name?.ToLowerInvariant().Contains(search) ?? false)
+            || (starship.Model?.ToLowerInvariant().Contains(search) ?? false)
+            || (starship.StarshipClass?.ToLowerInvariant().Contains(search) ?? false)
+            || (starship.Manufacturer?.ToLowerInvariant().Contains(search) ?? false);
+    }
+
+
+    private string RowClass(Starship row, int index)
+    {
+        return row == selectedStarship ? "mud-selected-row" : string.Empty;
+    }
+
+    void RowClicked(DataGridRowClickEventArgs<Starship> args)
+    {
+        if (selectedStarship == args.Item)
+            selectedStarship = null;
+        else
+            selectedStarship = args.Item;
+    }
+}

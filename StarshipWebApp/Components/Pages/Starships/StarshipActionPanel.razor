@@ -1,0 +1,96 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using StarshipWebApp.Data
+@using StarshipWebApp.Components.Pages.Starships.Dialogs
+@using MudBlazor
+@inject Radzen.DialogService DialogService
+@inject StarWarsContext StarWarsContext
+
+
+<MudButtonGroup Color="Color.Surface" Variant="MudBlazor.Variant.Filled">
+    <MudTooltip Text="Create a new Starship" Placement="Placement.Top" Color="Color.Info" Arrow="true">
+        <MudButton OnClick="CreateStarship" StartIcon="@Icons.Material.Filled.AddBox" Color="Color.Surface">Create</MudButton>
+    </MudTooltip>
+    <MudTooltip Text="@(SelectedStarship is not null ? "Edit Starship" : "Click on a Starship to Edit")" Placement="Placement.Top " Color="Color.Info" Arrow="true">
+        <MudButton OnClick="EditStarship" StartIcon="@Icons.Material.Filled.Edit" Color="@Color.Info" Disabled="@(SelectedStarship is null)">Edit</MudButton>
+    </MudTooltip>
+    <MudTooltip Text="@(SelectedStarship is not null ? "Delete Starship" : "Click on a Starship to Delete")" Placement="Placement.Top" Color="Color.Info" Arrow="true">
+        <MudButton OnClick="DeleteStarship" StartIcon="@Icons.Material.Filled.Delete" Color="@Color.Error" Disabled="@(SelectedStarship is null)">Delete</MudButton>
+    </MudTooltip>
+</MudButtonGroup>
+
+
+@code {
+
+    [Parameter]
+    public Starship? SelectedStarship { get; set; }
+
+    [Parameter]
+    public EventCallback<Starship?> UpdateStarships { get; set; }
+
+    protected async Task DeleteStarship()
+    {
+        var dialogParams = new Dictionary<string, object>
+        {
+            { "Starship", SelectedStarship }
+        };
+
+        var dialogOptions = new Radzen.DialogOptions
+            {
+                ShowClose = false,
+                Top = "10px",
+            };
+
+        var dialogResult = await DialogService.OpenAsync<StarshipDelete>($"Confirm Deletion", dialogParams, dialogOptions);
+
+        if (dialogResult)
+        {
+            StarWarsContext.Remove(SelectedStarship);
+            await StarWarsContext.SaveChangesAsync();
+            await UpdateStarships.InvokeAsync();
+        }
+    }
+
+    protected async Task EditStarship()
+    {
+        var dialogParams = new Dictionary<string, object>
+        {
+            { "starship", SelectedStarship }
+        };
+
+        var dialogOptions = new Radzen.DialogOptions
+            {
+                ShowClose = false,
+                Top = "10px",
+                Width = "1200px",
+            };
+
+        // The Edit dialog will always return a starhip/null value. starships types will indicate a new or edited starship has been returned.
+        var editedStarshipResult = await DialogService.OpenAsync<StarshipEdit>($"Starship View/Edit", dialogParams, dialogOptions);
+
+        if (editedStarshipResult is not null)
+        {
+            // If a starship was returned, it means the user edited an existing starship or created a new one. The datagrid will be refreshed.
+            await UpdateStarships.InvokeAsync();
+        }
+    }
+
+    protected async Task CreateStarship()
+    {
+        var dialogOptions = new Radzen.DialogOptions
+            {
+                ShowClose = true,
+                Top = "10px",
+                Width = "1200px",
+            };
+
+        // The Edit dialog will always return a starhip/null value. starships types will indicate a new or edited starship has been returned.
+        var editedStarshipResult = await DialogService.OpenAsync<StarshipCreate>($"Starship Creator", null, dialogOptions) ?? null;
+
+        if (editedStarshipResult is not null)
+        {
+            // If a starship was returned, it means the user created a new Starship. The datagrid will be refreshed.
+            await UpdateStarships.InvokeAsync();
+        }
+    }
+}

@@ -1,28 +1,35 @@
 ﻿@inherits LayoutComponentBase
 @using Radzen
+@using Radzen.Blazor
 @using MudBlazor
 
-@* Required *@
-<MudThemeProvider />
-<MudPopoverProvider />
-
-@* Needed for dialogs *@
-<MudDialogProvider />
-
-@* Needed for snackbars *@
-<MudSnackbarProvider />
+@* MudBlazorProviders *@
+<MudThemeProvider @rendermode="InteractiveServer" />
+<MudPopoverProvider @rendermode="InteractiveServer" />
+<MudSnackbarProvider @rendermode="InteractiveServer" />
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+    <AuthorizeView>
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+    </AuthorizeView>
+
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
-
+        <AuthorizeView>
+            <div class="top-row px-4">
+                <a href="/logout" target="_blank">Logout</a>
+            </div>
+        </AuthorizeView>
         <article class="content px-4">
+
+            @* RadzenProviders *@
+            <RadzenDialog @rendermode="InteractiveServer" />
+            <RadzenNotification @rendermode="InteractiveServer" />
+            <RadzenTooltip @rendermode="InteractiveServer" />
+            <RadzenContextMenu @rendermode="InteractiveServer" />
+
             @Body
         </article>
     </main>
@@ -33,3 +40,4 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+<script src="_content/MudBlazor/MudBlazor.min.js"></script>

@@ -1,0 +1,28 @@
+﻿@typeparam T
+@using Radzen
+@using Radzen.Blazor
+@using StarshipWebApp.Components.Pages.Starships
+
+
+<RadzenLabel Text="@Label" />
+<RadzenNumeric TValue="T"
+               @bind-Value="Value"
+               Format="N0"
+               Name="@Name"
+               Change="@OnChange"
+               Style="width:100%" />
+
+@code {
+    [Parameter] public string Label { get; set; } = string.Empty;
+    [Parameter] public string Name { get; set; } = string.Empty;
+    [Parameter] public T? Value { get; set; }
+    [Parameter] public EventCallback<T?> ValueChanged { get; set; }
+    [Parameter] public EventCallback<T?> Change { get; set; }
+
+    private async Task OnChange(T? value)
+    {
+        await ValueChanged.InvokeAsync(value);
+        await Change.InvokeAsync(value);
+    }
+}
+

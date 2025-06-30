@@ -64,12 +64,13 @@ namespace StarshipWebApp.Models
         public List<string>? Films { get; set; } = null;
 
         [JsonPropertyName("created")]
-        public DateTime Created { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         [JsonPropertyName("edited")]
-        public DateTime Edited { get; set; }
+        public DateTime UpdatedDate { get; set; } = DateTime.Now;
 
         [JsonPropertyName("url")]
-        public string Url { get; set; }
+        public string? Url { get; set; } = null;
+
     }
 }
