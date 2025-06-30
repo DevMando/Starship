@@ -5,6 +5,7 @@
 @using PrettyBlazor
 @using StarshipWebApp.Components.Pages.Starships
 @using StarshipWebApp.Data
+@using StarshipWebApp.Models
 @inject StarWarsContext StarWarsContext
 
 
@@ -60,7 +61,6 @@
 
     private List<Starship> StarshipList = new List<Starship>();
     private string SearchText = string.Empty;
-    private bool _sortNameByLength;
     private bool _isLoading = true;
     Starship? selectedStarship;
 
