@@ -482,3 +482,10 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Docker
+.dockerignore
+
+# App settings
+appsettings.*.json
+!appsettings.Development.json   # optionally track dev settings
