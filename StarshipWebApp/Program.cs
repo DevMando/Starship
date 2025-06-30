@@ -64,7 +64,7 @@ app.MapGet("/google-login", async (HttpContext httpContext) =>
 app.MapGet("/logout", async (HttpContext httpContext) =>
 {
     await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-    httpContext.Response.Redirect("/SignIn/1");
+    httpContext.Response.Redirect("/Login/1");
 });
 
 // Configure the HTTP request pipeline.
