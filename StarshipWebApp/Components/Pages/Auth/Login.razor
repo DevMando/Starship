@@ -8,18 +8,22 @@
 
 <link href="~/css/site.css" rel="stylesheet" />
 
-<RadzenStack Orientation="Radzen.Orientation.Vertical" AlignItems="AlignItems.Center">
-    <img class="glass-effect login-graphic" src="./images/login.png" />
+<Animate Animation="Animations.FadeIn">
+    <RadzenStack Orientation="Radzen.Orientation.Vertical" AlignItems="AlignItems.Center">
 
-    <PrettyBlazor.Condition Evaluation="@(status == (int)LoginStatus.SuccesfulLogOut)">
-        <Match>
-            <RadzenAlert Style="max-width:800px;" AlertStyle=AlertStyle.Success AllowClose="false" Variant=Variant.Filled Text="Successfuly Logged Out"></RadzenAlert>
-        </Match>
-    </PrettyBlazor.Condition>
-    
-    <GoogleSignInButton />
+        <img class="glass-effect login-graphic" src="./images/login.png" />
 
-</RadzenStack>
+        <PrettyBlazor.Condition Evaluation="@(status == (int)LoginStatus.SuccesfulLogOut)">
+            <Match>
+                <RadzenAlert Style="max-width:800px;" AlertStyle=AlertStyle.Success AllowClose="false" Variant=Variant.Filled Text="Successfuly Logged Out"></RadzenAlert>
+            </Match>
+        </PrettyBlazor.Condition>
+
+        <GoogleSignInButton />
+
+    </RadzenStack>
+</Animate>
+
 
 
 @code {
@@ -39,7 +43,7 @@
         {
             NavManager.NavigateTo("/Home", true);
         }
-       
+
         base.OnInitialized();
     }
 }
