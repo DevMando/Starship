@@ -17,34 +17,38 @@
 <RadzenTooltip />
 <RadzenContextMenu />
 
-<RadzenLayout>
-    <AuthorizeView>
-        <RadzenHeader>
-            <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="Radzen.AlignItems.Center" Gap="0">
-                <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
-                <RadzenLabel Text="Starships" />
-            </RadzenStack>
-        </RadzenHeader>
-        <RadzenSidebar Responsive="false" Style="width: max-content">
-            <RadzenPanelMenu DisplayStyle="@(sidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)" ShowArrow="false">
-                <RadzenPanelMenuItem Text="Home" Icon="home" Click="@(() => NavigationManager.NavigateTo("/home", true))" />
-                <RadzenPanelMenuItem Text="Starships" Icon="auto_awesome" Click="@(() => NavigationManager.NavigateTo("/starships", true))" />
-                <RadzenPanelMenuItem Text="Logout" Icon="logout" Click="@(() => NavigationManager.NavigateTo("/logout", true))" />
-            </RadzenPanelMenu>
-        </RadzenSidebar>
-    </AuthorizeView>
+<CascadingValue Value="User" Name="User">
+    <RadzenLayout>
+        <AuthorizeView>
+            <RadzenHeader>
+                <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="Radzen.AlignItems.Center" Gap="0">
+                    <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
+                    <RadzenLabel Text="Starships" />
+                </RadzenStack>
+            </RadzenHeader>
+            <RadzenSidebar Responsive="false" Style="width: max-content">
+                <RadzenPanelMenu DisplayStyle="@(sidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)" ShowArrow="false">
+                    <RadzenPanelMenuItem Text="Home" Icon="home" Click="@(() => NavigationManager.NavigateTo("/home", true))" />
+                    <RadzenPanelMenuItem Text="Starships" Icon="auto_awesome" Click="@(() => NavigationManager.NavigateTo("/starships", true))" />
+                    <RadzenPanelMenuItem Text="Logout" Icon="logout" Click="@(() => NavigationManager.NavigateTo("/logout", true))" />
+                </RadzenPanelMenu>
+            </RadzenSidebar>
+        </AuthorizeView>
 
-    <RadzenBody>
+        <RadzenBody>
 
-        <div class="rz-p-4">
-            @Body
-        </div>
-    </RadzenBody>
-    <RadzenFooter>
-        Developed by DevMando for GoEngineer.
-    </RadzenFooter>
+            <div class="rz-p-4">
 
-</RadzenLayout>
+                @Body
+
+            </div>
+        </RadzenBody>
+        <RadzenFooter>
+            Developed by DevMando for GoEngineer.
+        </RadzenFooter>
+
+    </RadzenLayout>
+</CascadingValue>
 
 <div id="blazor-error-ui">
     An unhandled error has occurred.
@@ -56,4 +60,12 @@
 
 @code {
     bool sidebarExpanded = true;
+    public User User;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var principal = authState.User;
+        User = principal.ToAppUser();
+    }
 }

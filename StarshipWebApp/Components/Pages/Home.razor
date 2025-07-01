@@ -10,6 +10,11 @@
 <PageTitle>Home | Starships</PageTitle>
 
 <WelcomeGreeting />
-
 <DashboardNavigationTabs />
 
+
+
+@code {
+    [CascadingParameter(Name = "User")]
+    public User User { get; set; } = new();
+}

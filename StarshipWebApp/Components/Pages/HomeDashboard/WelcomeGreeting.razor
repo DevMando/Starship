@@ -5,11 +5,15 @@
     <div class="jumbotron">
         <RadzenRow>
             <RadzenColumn>
-                <RadzenText TextStyle="TextStyle.DisplayH5" Style="color:white;" >
-                    Welcome
+                <RadzenText TextStyle="TextStyle.DisplayH5" Style="color:white;">
+                    Welcome @User?.GivenName!
                 </RadzenText>
             </RadzenColumn>
         </RadzenRow>
     </div>
 </Animate>
 
+@code {
+    [CascadingParameter(Name = "User")]
+    public User User { get; set; } = new();
+}
