@@ -1,6 +1,6 @@
 ﻿@page "/Starships"
 @attribute [Authorize]
-@rendermode InteractiveServer
+
 @using MudBlazor
 @using Microsoft.EntityFrameworkCore
 @using PrettyBlazor
@@ -11,38 +11,42 @@
 
 <link href="~/components.css" rel="stylesheet" />
 
+
 <Condition Evaluation="_isLoading">
 
     <Match>
-        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" Class="mud-loading-cirlce" />
+        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
     </Match>
 
     <NotMatch>
 
-        <StarshipActionPanel SelectedStarship="selectedStarship" UpdateStarships="GetStarshipsAsync" />
+        <Radzen.Blazor.RadzenCard>
+            <StarshipActionPanel SelectedStarship="selectedStarship" UpdateStarships="GetStarshipsAsync" />
 
-        <MudDataGrid T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickSearch"
-        Hideable="true" Striped="true" Hover="false"
-        RowClick="@RowClicked" RowClassFunc="RowClass" SelectedItem="@selectedStarship" Style="clear:both;">
-            <ToolBarContent>
-                <MudText Typo="MudBlazor.Typo.h6">Starships</MudText>
-                <MudSpacer />
+            <MudDataGrid T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickSearch"
+                         Hideable="true" Striped="true" Hover="false"
+                         RowClick="@RowClicked" RowClassFunc="RowClass" SelectedItem="@selectedStarship" Style="clear:both;">
+                <ToolBarContent>
+                    <MudText Typo="MudBlazor.Typo.h6">Starships</MudText>
+                    <MudSpacer />
 
-                <MudTextField @bind-Value="SearchText" Placeholder="Search" Adornment="MudBlazor.Adornment.Start" Immediate="true"
-                AdornmentIcon="@MudBlazor.Icons.Material.Filled.Search" IconSize="MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
-            </ToolBarContent>
-            <Columns>
-                <PropertyColumn Property="x => x.Name" Title="Name" Sortable="true" Filterable="true" />
-                <PropertyColumn Property="x => x.Model" Title="Model" Sortable="true" Filterable="true" />
-                <PropertyColumn Property="x => x.Manufacturer" Title="Manufacturer" Sortable="true" Filterable="true" />
-                <PropertyColumn Property="x => x.StarshipClass" Title="Starship Class" Sortable="true" Filterable="true" />
-                <PropertyColumn Property="x => x.Length" Title="Length" Sortable="true" Filterable="true" />
-                <PropertyColumn Property="x => x.CargoCapacity" Title="Cargo Capacity" Sortable="true" Filterable="true" />
-            </Columns>
-            <PagerContent>
-                <MudDataGridPager T="Starship" />
-            </PagerContent>
-        </MudDataGrid>
+                    <MudTextField @bind-Value="SearchText" Placeholder="Search" Adornment="MudBlazor.Adornment.Start" Immediate="true"
+                                  AdornmentIcon="@MudBlazor.Icons.Material.Filled.Search" IconSize="MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
+                </ToolBarContent>
+                <Columns>
+                    <PropertyColumn Property="x => x.Name" Title="Name" Sortable="true" Filterable="true" />
+                    <PropertyColumn Property="x => x.Model" Title="Model" Sortable="true" Filterable="true" />
+                    <PropertyColumn Property="x => x.Manufacturer" Title="Manufacturer" Sortable="true" Filterable="true" />
+                    <PropertyColumn Property="x => x.StarshipClass" Title="Starship Class" Sortable="true" Filterable="true" />
+                    <PropertyColumn Property="x => x.Length" Title="Length" Sortable="true" Filterable="true" />
+                    <PropertyColumn Property="x => x.CargoCapacity" Title="Cargo Capacity" Sortable="true" Filterable="true" />
+                </Columns>
+                <PagerContent>
+                    <MudDataGridPager T="Starship" />
+                </PagerContent>
+            </MudDataGrid>
+        </Radzen.Blazor.RadzenCard>
+
     </NotMatch>
 
 </Condition>
@@ -53,7 +57,7 @@
 
     private List<Starship> StarshipList = new List<Starship>();
     private string SearchText = string.Empty;
-    private bool _isLoading = true;
+    private bool _isLoading = false;
     Starship? selectedStarship;
 
     protected override async Task OnInitializedAsync()
@@ -69,7 +73,6 @@
             _isLoading = true;
             StarshipList = await StarWarsContext.Starships.ToListAsync();
             _isLoading = false;
-            StateHasChanged();
         }
         else
         {

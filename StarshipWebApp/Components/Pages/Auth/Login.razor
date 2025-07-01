@@ -3,12 +3,13 @@
 @page "/Login/{status:int}"
 @using Radzen
 @using Radzen.Blazor
-
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthStateProvider
 
 <link href="~/css/site.css" rel="stylesheet" />
 
 <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center">
-    <img src="./images/starshiplogo.png" style="height:540px;" />
+    <img src="./images/login.png" style="height:540px;" />
 
     <GoogleSignInButton />
 
@@ -27,5 +28,17 @@
     protected enum LoginStatus
     {
         SuccesfulLogOut = 1
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+
+        if ((bool)authState?.User?.Identity?.IsAuthenticated)
+        {
+            NavManager.NavigateTo("/Home", true);
+        }
+       
+        base.OnInitialized();
     }
 }
