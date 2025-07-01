@@ -1,9 +1,15 @@
 ﻿@page "/Home"
 @attribute [Authorize]
-
 @using StarshipWebApp.Components.Pages.Starships
 @using Microsoft.AspNetCore.Components.Authorization
 @using MudBlazor
+@using Radzen
+@using Radzen.Blazor
+@using StarshipWebApp.Components.Pages.HomeDashboard
 
-<PageTitle>Home</PageTitle>
-<Starships></Starships>
+<PageTitle>Home | Starships</PageTitle>
+
+<WelcomeGreeting />
+
+<DashboardNavigationTabs />
+

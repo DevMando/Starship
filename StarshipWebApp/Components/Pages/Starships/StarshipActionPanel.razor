@@ -7,9 +7,9 @@
 @inject StarWarsContext StarWarsContext
 
 
-<MudButtonGroup Color="Color.Surface" Variant="MudBlazor.Variant.Filled">
+<MudButtonGroup Variant="MudBlazor.Variant.Filled">
     <MudTooltip Text="Create a new Starship" Placement="Placement.Top" Color="Color.Info" Arrow="true">
-        <MudButton OnClick="CreateStarship" StartIcon="@Icons.Material.Filled.AddBox" Color="Color.Surface">Create</MudButton>
+        <MudButton OnClick="CreateStarship" StartIcon="@Icons.Material.Filled.AddBox" Color="Color.Success">Create</MudButton>
     </MudTooltip>
     <MudTooltip Text="@(SelectedStarship is not null ? "Edit Starship" : "Click on a Starship to Edit")" Placement="Placement.Top " Color="Color.Info" Arrow="true">
         <MudButton OnClick="EditStarship" StartIcon="@Icons.Material.Filled.Edit" Color="@Color.Info" Disabled="@(SelectedStarship is null)">Edit</MudButton>

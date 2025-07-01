@@ -59,3 +59,55 @@ h1:focus {
     transform: translate(-50%, -50%);
 }
 
+/* Body + Layout + Content */
+body, .rz-layout, .rz-body {
+    background: linear-gradient(#2c2c2e, #1f1f21) !important; /* Cool steel grey gradient */
+    color: #e0e0e0 !important;
+}
+
+/* Header Bar */
+.rz-header {
+    background-color: #3b3b3d !important;
+    color: #e0e0e0 !important;
+}
+
+/* Sidebar */
+.rz-sidebar {
+    background-color: #2a2a2c !important;
+    color: #e0e0e0 !important;
+    border-right: 1px solid #3c3c3e !important;
+}
+
+/* Sidebar Menu Items */
+.rz-panelmenu .rz-panelmenu-item {
+    background-color: transparent !important;
+    color: lightslategrey !important;
+}
+
+    .rz-panelmenu .rz-panelmenu-item:hover {
+        background-color: #3a3a3e !important;
+        color: #ffffff !important;
+    }
+
+/* Optional: Selected Menu Item */
+.rz-panelmenu .rz-state-active {
+    background-color: #48484a !important;
+    color: #ffffff !important;
+}
+
+/* Footer */
+.rz-footer {
+    background-color: #2a2a2c !important;
+    color: #999999 !important;
+}
+
+.rz-navigation-item {
+    color: white !important;
+    background-color: #48484a !important;
+}
+
+.rz-navigation-item-icon {
+    color: #D0D0D0 !important;
+    background-color: #48484a !important;
+}
+
