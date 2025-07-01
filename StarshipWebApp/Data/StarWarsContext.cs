@@ -27,7 +27,7 @@ namespace StarshipWebApp.Data
                     v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions?)null));
         }
 
-
         public DbSet<Starship> Starships { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
