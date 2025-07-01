@@ -20,14 +20,12 @@
 
     <NotMatch>
 
-
-        <StarshipActionPanel SelectedStarship="selectedStarship" UpdateStarships="GetStarshipsAsync" />
-
         <MudDataGrid T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickSearch"
                      Hideable="true" Striped="true" Hover="false"
                      RowClick="@RowClicked" RowClassFunc="RowClass" SelectedItem="@selectedStarship" Style="clear:both;">
             <ToolBarContent>
-                <MudText Typo="MudBlazor.Typo.h6">Starships</MudText>
+
+                <StarshipActionPanel SelectedStarship="selectedStarship" UpdateStarships="GetStarshipsAsync" />
                 <MudSpacer />
 
                 <MudTextField @bind-Value="SearchText" Placeholder="Search" Adornment="MudBlazor.Adornment.Start" Immediate="true"
