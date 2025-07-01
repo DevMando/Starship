@@ -11,13 +11,14 @@
 <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center">
     <img src="./images/login.png" style="height:540px;" />
 
-    <GoogleSignInButton />
-
     <PrettyBlazor.Condition Evaluation="@(status == (int)LoginStatus.SuccesfulLogOut)">
         <Match>
             <RadzenAlert Style="max-width:800px;" AlertStyle=AlertStyle.Success AllowClose="false" Variant=Variant.Filled Text="Successfuly Logged Out"></RadzenAlert>
         </Match>
     </PrettyBlazor.Condition>
+    
+    <GoogleSignInButton />
+
 </RadzenStack>
 
 
