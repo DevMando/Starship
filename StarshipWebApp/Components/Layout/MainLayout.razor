@@ -4,7 +4,7 @@
 @using MudBlazor
 @inject AuthenticationStateProvider AuthStateProvider
 @inject NavigationManager NavigationManager
-
+@inject StarWarsContext StarWarsContext
 
 @* MudBlazorProviders *@
 <MudThemeProvider />
@@ -67,5 +67,16 @@
         var authState = await AuthStateProvider.GetAuthenticationStateAsync();
         var principal = authState.User;
         User = principal.ToAppUser();
+    }
+
+    protected async Task SaveNewUsersNeverBeenSeenBefore()
+    {
+        bool userIsKnown = StarWarsContext.Users.Any(u => u.NameIdentifier == User.NameIdentifier);
+
+        if (!userIsKnown)
+        {
+            StarWarsContext.Users.Add(User);
+            await StarWarsContext.SaveChangesAsync();
+        }
     }
 }

@@ -15,7 +15,8 @@ namespace StarshipWebApp.Helpers
                 Email = user.FindFirst(ClaimTypes.Email)?.Value ?? string.Empty,
                 PictureUrl = user.FindFirst("picture")?.Value ?? string.Empty,
                 GivenName = user.FindFirst(ClaimTypes.GivenName)?.Value ?? string.Empty,
-                FamilyName = user.FindFirst(ClaimTypes.Surname)?.Value ?? string.Empty
+                FamilyName = user.FindFirst(ClaimTypes.Surname)?.Value ?? string.Empty,
+                NameIdentifier = user.FindFirst(ClaimTypes.NameIdentifier)?.Value
             };
         }
     }
