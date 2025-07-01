@@ -1,0 +1,33 @@
+﻿@inject NavigationManager NavigationManager
+@using Radzen
+@using Radzen.Blazor
+
+<Radzen.Blazor.RadzenStack>
+    <img src="@imagePath" style="border-radius: 15px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);overflow: hidden; max-width" />
+    <RadzenButton Text="@buttonText" Click="redirect" ButtonStyle="ButtonStyle.Primary" Style="margin-left:16px;"></RadzenButton>
+</Radzen.Blazor.RadzenStack>
+    
+
+
+@code {
+
+    [Parameter]
+    public string url_link { get; set; }
+
+    [Parameter]
+    public string buttonText { get; set; }
+
+    [Parameter]
+    public string imagePath { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+
+    async Task redirect()
+    {
+        NavigationManager.NavigateTo(url_link);
+    }
+
+}

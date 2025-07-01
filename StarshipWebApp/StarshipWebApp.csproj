@@ -14,6 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazorise" Version="1.7.7" />
+    <PackageReference Include="Blazorise.Animate" Version="1.7.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.6" />
@@ -32,6 +34,10 @@
     <PackageReference Include="MudBlazor" Version="8.8.0" />
     <PackageReference Include="PrettyBlazor" Version="1.2.0" />
     <PackageReference Include="Radzen.Blazor" Version="7.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Components\Images\" />
   </ItemGroup>
 
 </Project>
