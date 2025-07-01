@@ -20,32 +20,32 @@
 
     <NotMatch>
 
-        <Radzen.Blazor.RadzenCard>
-            <StarshipActionPanel SelectedStarship="selectedStarship" UpdateStarships="GetStarshipsAsync" />
 
-            <MudDataGrid T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickSearch"
-                         Hideable="true" Striped="true" Hover="false"
-                         RowClick="@RowClicked" RowClassFunc="RowClass" SelectedItem="@selectedStarship" Style="clear:both;">
-                <ToolBarContent>
-                    <MudText Typo="MudBlazor.Typo.h6">Starships</MudText>
-                    <MudSpacer />
+        <StarshipActionPanel SelectedStarship="selectedStarship" UpdateStarships="GetStarshipsAsync" />
 
-                    <MudTextField @bind-Value="SearchText" Placeholder="Search" Adornment="MudBlazor.Adornment.Start" Immediate="true"
-                                  AdornmentIcon="@MudBlazor.Icons.Material.Filled.Search" IconSize="MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
-                </ToolBarContent>
-                <Columns>
-                    <PropertyColumn Property="x => x.Name" Title="Name" Sortable="true" Filterable="true" />
-                    <PropertyColumn Property="x => x.Model" Title="Model" Sortable="true" Filterable="true" />
-                    <PropertyColumn Property="x => x.Manufacturer" Title="Manufacturer" Sortable="true" Filterable="true" />
-                    <PropertyColumn Property="x => x.StarshipClass" Title="Starship Class" Sortable="true" Filterable="true" />
-                    <PropertyColumn Property="x => x.Length" Title="Length" Sortable="true" Filterable="true" />
-                    <PropertyColumn Property="x => x.CargoCapacity" Title="Cargo Capacity" Sortable="true" Filterable="true" />
-                </Columns>
-                <PagerContent>
-                    <MudDataGridPager T="Starship" />
-                </PagerContent>
-            </MudDataGrid>
-        </Radzen.Blazor.RadzenCard>
+        <MudDataGrid T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickSearch"
+                     Hideable="true" Striped="true" Hover="false"
+                     RowClick="@RowClicked" RowClassFunc="RowClass" SelectedItem="@selectedStarship" Style="clear:both;">
+            <ToolBarContent>
+                <MudText Typo="MudBlazor.Typo.h6">Starships</MudText>
+                <MudSpacer />
+
+                <MudTextField @bind-Value="SearchText" Placeholder="Search" Adornment="MudBlazor.Adornment.Start" Immediate="true"
+                              AdornmentIcon="@MudBlazor.Icons.Material.Filled.Search" IconSize="MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Name" Title="Name" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.Model" Title="Model" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.Manufacturer" Title="Manufacturer" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.StarshipClass" Title="Starship Class" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.Length" Title="Length" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.CargoCapacity" Title="Cargo Capacity" Sortable="true" Filterable="true" />
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="Starship" />
+            </PagerContent>
+        </MudDataGrid>
+
 
     </NotMatch>
 

@@ -5,6 +5,18 @@
 @inject AuthenticationStateProvider AuthStateProvider
 @inject NavigationManager NavigationManager
 
+
+@* MudBlazorProviders *@
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudSnackbarProvider />
+
+@* RadzenProviders *@
+<RadzenDialog />
+<RadzenNotification />
+<RadzenTooltip />
+<RadzenContextMenu />
+
 <RadzenLayout>
     <AuthorizeView>
         <RadzenHeader>
@@ -23,19 +35,8 @@
     </AuthorizeView>
 
     <RadzenBody>
+
         <div class="rz-p-4">
-
-            @* MudBlazorProviders *@
-            <MudThemeProvider />
-            <MudPopoverProvider />
-            <MudSnackbarProvider />
-
-            @* RadzenProviders *@
-            <RadzenDialog />
-            <RadzenNotification />
-            <RadzenTooltip />
-            <RadzenContextMenu />
-
             @Body
         </div>
     </RadzenBody>

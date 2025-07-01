@@ -9,64 +9,10 @@
 
 <PageTitle>Home | Starships</PageTitle>
 
-<RadzenCard class="iusd-card" Style="height:90%; min-height:700px; max-width:2200px;">
-    <Animate Auto Animation="Animations.FadeIn" DelayMilliseconds="500">
-        <div class="jumbotron">
-            <RadzenRow>
-                <RadzenColumn>
-                    <RadzenText TextStyle="TextStyle.DisplayH5">
-                        Welcome 
-                    </RadzenText>
-                </RadzenColumn>
-            </RadzenRow>
-        </div>
-    </Animate>
+<RadzenCard Style="height:90%; min-height:700px; max-width:2200px;">
 
-    <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Info">
-        <MudTabPanel Text="Main Menu">
-           
-            <Animate Animation="Animations.FadeUp">
-                <RadzenRow JustifyContent="JustifyContent.Center">
-                   
-                    <RadzenColumn SizeXS="12" SizeSM="6" SizeMD="4" SizeLG="3" SizeXL="2">
-                        <DashboardButton url_link="/Starships" buttonText="Starships" imagePath="./images/ships.png"></DashboardButton>
-                    </RadzenColumn>
+    <WelcomeGreeting />
 
-                    <RadzenColumn SizeXS="12" SizeSM="6" SizeMD="4" SizeLG="3" SizeXL="2">
-                        <DashboardButton url_link="/" buttonText="Pilots" imagePath="./images/pilots.png"></DashboardButton>
-                    </RadzenColumn>
-
-                    <RadzenColumn SizeXS="12" SizeSM="6" SizeMD="4" SizeLG="3" SizeXL="2">
-                        <DashboardButton url_link="/" buttonText="Flims" imagePath="./images/films.png"></DashboardButton>
-                    </RadzenColumn>
-
-                </RadzenRow>
-            </Animate>
-        </MudTabPanel>
-        <MudTabPanel Text="Settings">
-            <Animate Animation="Animations.FadeUp">
-                <RadzenRow JustifyContent="JustifyContent.Center">
-
-                    <RadzenColumn Size="4" SizeMD="4" SizeLG="3">
-                        <DashboardButton url_link="/Profile" buttonText="View Profile" ImagePath="" />
-                    </RadzenColumn>
-
-                </RadzenRow>
-            </Animate>
-        </MudTabPanel>
-        <AuthorizeView Roles="Admin, Developer">
-            <MudTabPanel Text="Admin Services">
-                <Animate Animation="Animations.FadeUp">
-                    <RadzenRow JustifyContent="JustifyContent.Center">
-
-                        <RadzenColumn Size="4" SizeMD="4" SizeLG="2">
-                            <DashboardButton url_link="/Users" buttonText="Manage Accounts" imagePath="users" />
-                        </RadzenColumn>
-
-                    </RadzenRow>
-                </Animate>
-            </MudTabPanel>
-        </AuthorizeView>
-    </MudTabs>
+    <DashboardNavigationTabs/>
 
 </RadzenCard>
