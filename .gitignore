@@ -489,3 +489,5 @@ $RECYCLE.BIN/
 # App settings
 appsettings.*.json
 !appsettings.Development.json   # optionally track dev settings
+
+StarshipWebApp/Properties/ServiceDependencies/DevMandoStarships/profile.arm.json
