@@ -1,0 +1,49 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using MudBlazor
+
+
+<MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" style="max-width:2200">
+    <MudTabPanel Text="Main Menu">
+
+        <Animate Animation="Animations.SlideUp">
+            <RadzenRow JustifyContent="JustifyContent.Center" Style="margin-top:12px;">
+
+                <RadzenColumn SizeXS="12" SizeSM="6" SizeMD="4" SizeLG="3" SizeXL="2">
+                    <DashboardButton url_link="/Starships" buttonText="Starships" imagePath="./images/ships.png"></DashboardButton>
+                </RadzenColumn>
+
+                <RadzenColumn SizeXS="12" SizeSM="6" SizeMD="4" SizeLG="3" SizeXL="2">
+                    <DashboardButton url_link="/Pilots" buttonText="Pilots" isInDevelopment="true" imagePath="./images/pilots.png"></DashboardButton>
+                </RadzenColumn>
+
+                <RadzenColumn SizeXS="12" SizeSM="6" SizeMD="4" SizeLG="3" SizeXL="2">
+                    <DashboardButton url_link="/Films" buttonText="Films" isInDevelopment="true" imagePath="./images/films.png"></DashboardButton>
+                </RadzenColumn>
+
+            </RadzenRow>
+        </Animate>
+    </MudTabPanel>
+    <MudTabPanel Text="Profile">
+
+        <RadzenRow JustifyContent="JustifyContent.Center" Style="margin-top:12px;">
+
+            <Profile></Profile>
+
+        </RadzenRow>
+
+    </MudTabPanel>
+    <AuthorizeView Roles="Admin, Developer">
+        <MudTabPanel Text="Admin Services">
+            <Animate Animation="Animations.FadeUp">
+                <RadzenRow JustifyContent="JustifyContent.Center">
+
+                    <RadzenColumn Size="4" SizeMD="4" SizeLG="2" Style="margin-top:12px;">
+                        <DashboardButton url_link="/Users" buttonText="Manage Accounts" imagePath="users" />
+                    </RadzenColumn>
+
+                </RadzenRow>
+            </Animate>
+        </MudTabPanel>
+    </AuthorizeView>
+</MudTabs>

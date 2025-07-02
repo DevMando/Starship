@@ -1,6 +1,6 @@
 ﻿@page "/Starships"
 @attribute [Authorize]
-@rendermode InteractiveServer
+
 @using MudBlazor
 @using Microsoft.EntityFrameworkCore
 @using PrettyBlazor
@@ -11,25 +11,25 @@
 
 <link href="~/components.css" rel="stylesheet" />
 
+
 <Condition Evaluation="_isLoading">
 
     <Match>
-        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" Class="mud-loading-cirlce" />
+        <MudProgressCircular Color="MudBlazor.Color.Primary" Size="Size.Large" Indeterminate="true" />
     </Match>
 
     <NotMatch>
 
-        <StarshipActionPanel SelectedStarship="selectedStarship" UpdateStarships="GetStarshipsAsync" />
-
-        <MudDataGrid T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickSearch"
-        Hideable="true" Striped="true" Hover="false"
-        RowClick="@RowClicked" RowClassFunc="RowClass" SelectedItem="@selectedStarship" Style="clear:both;">
+        <MudDataGrid class="custom-dark-grid" T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickSearch"
+                     Hideable="true" Striped="true" Hover="false"
+                     RowClick="@RowClicked" RowClassFunc="RowClass" SelectedItem="@selectedStarship">
             <ToolBarContent>
-                <MudText Typo="MudBlazor.Typo.h6">Starships</MudText>
+
+                <StarshipActionPanel SelectedStarship="selectedStarship" UpdateStarships="GetStarshipsAsync" />
                 <MudSpacer />
 
                 <MudTextField @bind-Value="SearchText" Placeholder="Search" Adornment="MudBlazor.Adornment.Start" Immediate="true"
-                AdornmentIcon="@MudBlazor.Icons.Material.Filled.Search" IconSize="MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
+                              AdornmentIcon="@MudBlazor.Icons.Material.Filled.Search" IconSize="MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Name" Title="Name" Sortable="true" Filterable="true" />
@@ -38,11 +38,20 @@
                 <PropertyColumn Property="x => x.StarshipClass" Title="Starship Class" Sortable="true" Filterable="true" />
                 <PropertyColumn Property="x => x.Length" Title="Length" Sortable="true" Filterable="true" />
                 <PropertyColumn Property="x => x.CargoCapacity" Title="Cargo Capacity" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.Crew" Title="Crew" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.Passengers" Title="Passengers" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.MaxAtmospheringSpeed" Title="Max Atmosphering Speed" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.Consumables" Title="Consumables" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.CostInCredits" Title="Cost in Credits" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.CreatedDate" Title="Created" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.UpdatedDate" Title="Edited" Sortable="true" Filterable="true" />
             </Columns>
             <PagerContent>
                 <MudDataGridPager T="Starship" />
             </PagerContent>
         </MudDataGrid>
+
+
     </NotMatch>
 
 </Condition>
@@ -53,7 +62,7 @@
 
     private List<Starship> StarshipList = new List<Starship>();
     private string SearchText = string.Empty;
-    private bool _isLoading = true;
+    private bool _isLoading = false;
     Starship? selectedStarship;
 
     protected override async Task OnInitializedAsync()
@@ -67,9 +76,8 @@
         if (starship is null)
         {
             _isLoading = true;
-            StarshipList = await StarWarsContext.Starships.ToListAsync();
+            StarshipList = await StarWarsContext.Starships.OrderByDescending(c => c.CreatedDate).ToListAsync();
             _isLoading = false;
-            StateHasChanged();
         }
         else
         {
@@ -104,7 +112,14 @@
         return (starship.Name?.ToLowerInvariant().Contains(search) ?? false)
             || (starship.Model?.ToLowerInvariant().Contains(search) ?? false)
             || (starship.StarshipClass?.ToLowerInvariant().Contains(search) ?? false)
-            || (starship.Manufacturer?.ToLowerInvariant().Contains(search) ?? false);
+            || (starship.Manufacturer?.ToLowerInvariant().Contains(search) ?? false)
+            || (starship.Length?.ToString().Contains(search) ?? false)
+            || (starship.CargoCapacity?.ToString().Contains(search) ?? false)
+            || (starship.Crew?.ToString().Contains(search) ?? false)
+            || (starship.Passengers?.ToString().Contains(search) ?? false)
+            || (starship.MaxAtmospheringSpeed?.ToString().Contains(search) ?? false)
+            || (starship.Consumables?.ToLowerInvariant().Contains(search) ?? false)
+            || (starship.CostInCredits?.ToString().Contains(search) ?? false);
     }
 
 

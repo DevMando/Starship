@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -93,5 +94,6 @@ using (var scope = app.Services.CreateScope())
     await dbContext.Database.MigrateAsync();
     await DbSeeder.SeedStarshipsAsync(dbContext, swapiService);
 }
+
 
 app.Run();

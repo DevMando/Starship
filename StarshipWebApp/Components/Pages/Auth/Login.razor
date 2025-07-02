@@ -3,21 +3,27 @@
 @page "/Login/{status:int}"
 @using Radzen
 @using Radzen.Blazor
-
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthStateProvider
 
 <link href="~/css/site.css" rel="stylesheet" />
 
-<RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center">
-    <img src="./images/starshiplogo.png" style="height:540px;" />
+<Animate Animation="Animations.FadeIn">
+    <RadzenStack Orientation="Radzen.Orientation.Vertical" AlignItems="AlignItems.Center">
 
-    <GoogleSignInButton />
+        <img class="glass-effect login-graphic" src="./images/login.png" />
 
-    <PrettyBlazor.Condition Evaluation="@(status == (int)LoginStatus.SuccesfulLogOut)">
-        <Match>
-            <RadzenAlert Style="max-width:800px;" AlertStyle=AlertStyle.Success AllowClose="false" Variant=Variant.Filled Text="Successfuly Logged Out"></RadzenAlert>
-        </Match>
-    </PrettyBlazor.Condition>
-</RadzenStack>
+        <PrettyBlazor.Condition Evaluation="@(status == (int)LoginStatus.SuccesfulLogOut)">
+            <Match>
+                <RadzenAlert Style="max-width:800px;" AlertStyle=AlertStyle.Success AllowClose="false" Variant=Variant.Filled Text="Successfuly Logged Out"></RadzenAlert>
+            </Match>
+        </PrettyBlazor.Condition>
+
+        <GoogleSignInButton />
+
+    </RadzenStack>
+</Animate>
+
 
 
 @code {
@@ -27,5 +33,17 @@
     protected enum LoginStatus
     {
         SuccesfulLogOut = 1
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+
+        if ((bool)authState?.User?.Identity?.IsAuthenticated)
+        {
+            NavManager.NavigateTo("/Home", true);
+        }
+
+        base.OnInitialized();
     }
 }
