@@ -1,83 +1,353 @@
-﻿/* === MUDDATABLEROCKS DARK THEME + FULL VISIBILITY === */
-
-.custom-dark-grid .mud-table {
-    background-color: #1c1c28 !important;
-    color: #f5f5f5 !important; /* Boosted contrast */
+﻿.gsi-material-button {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-appearance: none;
+    background-color: WHITE;
+    background-image: none;
+    border: 1px solid #747775;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #1f1f1f;
+    cursor: pointer;
+    font-family: 'Roboto', arial, sans-serif;
+    font-size: 14px;
+    height: 40px;
+    letter-spacing: 0.25px;
+    outline: none;
+    overflow: hidden;
+    padding: 0 12px;
+    position: relative;
+    text-align: center;
+    -webkit-transition: background-color .218s, border-color .218s, box-shadow .218s;
+    transition: background-color .218s, border-color .218s, box-shadow .218s;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+    max-width: 400px;
+    min-width: min-content;
 }
 
-/* Header styles */
-.custom-dark-grid .mud-table-head th {
-    background-color: #2c2c3c !important;
+    .gsi-material-button .gsi-material-button-icon {
+        height: 20px;
+        margin-right: 12px;
+        min-width: 20px;
+        width: 20px;
+    }
+
+    .gsi-material-button .gsi-material-button-content-wrapper {
+        -webkit-align-items: center;
+        align-items: center;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        -webkit-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+        height: 100%;
+        justify-content: space-between;
+        position: relative;
+        width: 100%;
+    }
+
+    .gsi-material-button .gsi-material-button-contents {
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+        font-family: 'Roboto', arial, sans-serif;
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: top;
+    }
+
+    .gsi-material-button .gsi-material-button-state {
+        -webkit-transition: opacity .218s;
+        transition: opacity .218s;
+        bottom: 0;
+        left: 0;
+        opacity: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .gsi-material-button:disabled {
+        cursor: default;
+        background-color: #ffffff61;
+        border-color: #1f1f1f1f;
+    }
+
+        .gsi-material-button:disabled .gsi-material-button-contents {
+            opacity: 38%;
+        }
+
+        .gsi-material-button:disabled .gsi-material-button-icon {
+            opacity: 38%;
+        }
+
+    .gsi-material-button:not(:disabled):active .gsi-material-button-state,
+    .gsi-material-button:not(:disabled):focus .gsi-material-button-state {
+        background-color: #303030;
+        opacity: 12%;
+    }
+
+    .gsi-material-button:not(:disabled):hover {
+        -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+        box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+    }
+
+        .gsi-material-button:not(:disabled):hover .gsi-material-button-state {
+            background-color: #303030;
+            opacity: 8%;
+        }
+
+
+.mud-table-row {
+    cursor: pointer !important;
+}
+
+
+
+
+
+/**CUSTOM DARK GRID*/
+/* Outer container */
+.custom-dark-grid {
+    color: black !important;
+    background-color: lightgray !important;
+}
+    /* Header row */
+    .custom-dark-grid .mud-table-header {
+        background-color: white !important;
+        color: white !important;
+    }
+
+    /* Each header cell */
+    .custom-dark-grid .mud-table-head th {
+        background-color: #525271 !important;
+        color: white !important;
+    }
+
+    /* Pager background and text */
+    .custom-dark-grid .mud-table-pagination {
+        background-color: #2b2b2b !important;
+        color: black !important;
+    }
+
+    /* Dropdown for "Rows per page" */
+    .custom-dark-grid .mud-select,
+    .custom-dark-grid .mud-select-input,
+    .custom-dark-grid .mud-popover {
+        background-color: lightgray !important;
+        color: black !important;
+    }
+
+    /* Page number text */
+    .custom-dark-grid .mud-table-pagination .mud-typography {
+        color: black !important;
+    }
+
+.mud-selected-row {
+    background-color: lightcyan !important;
+    color: white !important;
+}
+
+/**Dark Dialog*/
+/* Dialog background */
+.dark-dialog .mud-dialog {
+    background-color: #1e1e2f !important;
     color: #ffffff !important;
-    font-weight: 600;
+    border-radius: 12px !important;
 }
 
-/* Row cells */
-.custom-dark-grid .mud-table td {
-    color: #f5f5f5 !important;
-    text-shadow: 0 0 1px rgba(0, 0, 0, 0.6);
-}
-
-/* Hover effect */
-.custom-dark-grid .mud-table-body tr:hover {
-    background-color: #33334d !important;
+/* Card sections if used inside */
+.dark-dialog .mud-paper,
+.dark-dialog .mud-card {
+    background-color: #1e1e2f !important;
     color: #ffffff !important;
 }
 
-/* Selected row */
-.custom-dark-grid .mud-selected {
-    background-color: #3f51b5 !important;
-    color: #ffffff !important;
-}
-
-/* Pagination section */
-.custom-dark-grid .mud-table-pagination {
-    background-color: #1c1c28 !important;
-    color: #cccccc !important;
-    border-top: 1px solid #444;
-}
-
-/* Pagination buttons */
-.custom-dark-grid .mud-pagination-item {
+/* Input fields */
+.dark-dialog input,
+.dark-dialog .mud-input,
+.dark-dialog .mud-input input {
     background-color: #2a2a3d !important;
     color: #ffffff !important;
 }
 
-    .custom-dark-grid .mud-pagination-item:hover,
-    .custom-dark-grid .mud-pagination-item.mud-pagination-item-active {
-        background-color: #5c6bc0 !important;
-        color: #ffffff !important;
-    }
-
-/* === FIX FOR TOP LEFT TOOLBAR BUTTONS === */
-
-/* Normal + enabled buttons */
-.custom-dark-grid .mud-button {
-    background-color: #2a2a3d !important;
-    color: #ffffff !important;
-    border: 1px solid #555 !important;
+/* Labels and adornments */
+.dark-dialog .mud-input-label,
+.dark-dialog .mud-input-adornment {
+    color: #aaaaaa !important;
 }
 
-    /* Disabled button fix */
-    .custom-dark-grid .mud-button:disabled {
-        background-color: #3a3a3a !important;
-        color: #888888 !important;
-        border-color: #555 !important;
-        opacity: 0.5;
+/* Slider thumb and track */
+.dark-dialog .mud-slider-thumb {
+    background-color: #7c4dff !important; /* Or your custom accent color */
+}
+
+.dark-dialog .mud-slider-track {
+    background-color: #5c5c7a !important;
+}
+
+
+/* === RADZEN DIALOG DARK THEME + WATERMARK === */
+/* Main dialog container */
+.rz-dialog {
+    background-color: #1c1c28 !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6) !important;
+    position: relative; /* Needed for watermark layering */
+}
+
+/* Dialog content wrapper with watermark */
+.rz-dialog-content {
+    background-color: #1c1c28 !important;
+    color: #ffffff !important;
+    position: relative;
+    z-index: 1;
+}
+
+    /* Watermark behind dialog content */
+    .rz-dialog-content::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/images/mandalorian-skull.png'); /* Make sure file exists */
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 60%;
+        opacity: 0.04;
+        pointer-events: none;
+        z-index: 0;
     }
 
-/* === SEARCH BAR FIX === */
+/* Backdrop overlay behind dialog */
+.rz-overlay {
+    background-color: rgba(0, 0, 0, 0.75) !important;
+}
 
-.custom-dark-grid .mud-input {
+/* Input fields */
+.rz-inputtext {
     background-color: #2a2a3d !important;
     color: #ffffff !important;
     border: 1px solid #444 !important;
 }
 
-    .custom-dark-grid .mud-input::placeholder {
-        color: #aaaaaa !important;
+    /* Input focus effect */
+    .rz-inputtext:focus {
+        border-color: #5c6bc0 !important;
+        box-shadow: 0 0 5px #5c6bc0 !important;
     }
 
-.custom-dark-grid .mud-icon {
+    /* Disabled inputs */
+    .rz-inputtext[disabled] {
+        color: #aaaaaa !important;
+        background-color: #2e2e3e !important;
+    }
+
+/* Labels and legends */
+.rz-label,
+.rz-fieldset-legend {
+    color: #dddddd !important;
+}
+
+/* Buttons */
+.rz-button {
     color: #ffffff !important;
 }
+
+    /* Primary button */
+    .rz-button.rz-primary {
+        background-color: #3f51b5 !important;
+        border: none !important;
+        color: #ffffff !important;
+    }
+
+    /* Secondary button */
+    .rz-button.rz-secondary {
+        background-color: #444 !important;
+        border: none !important;
+    }
+
+
+/* Red bold text for confirmation emphasis */
+.delete-warning strong {
+    color: #ff3d3d; /* or #ff1744 for a sharper red */
+    font-weight: bold;
+}
+
+/* Red DELETE button */
+.rz-button.rz-danger {
+    background-color: #d32f2f !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 0 8px rgba(211, 47, 47, 0.6);
+    font-weight: bold;
+}
+
+/* Optional: darker CANCEL button */
+.rz-button.rz-secondary {
+    background-color: #2c2c2c !important;
+    color: #cccccc !important;
+    border: 1px solid #555 !important;
+}
+
+
+/** Auto Complete Dark Theme*/
+/* Dropdown background and text */
+.rz-autocomplete-panel {
+    background-color: #1c1c28 !important;
+    color: #ffffff !important;
+    border: 1px solid #333 !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Individual item */
+.rz-autocomplete-item {
+    background-color: transparent !important;
+    color: #dddddd !important;
+    padding: 0.75rem 1rem;
+}
+
+    /* Hover effect */
+    .rz-autocomplete-item:hover {
+        background-color: #33334d !important;
+        color: #ffffff !important;
+    }
+
+    /* Highlighted via arrow keys */
+    .rz-autocomplete-item.rz-state-highlight {
+        background-color: #5c6bc0 !important;
+        color: #ffffff !important;
+    }
+
+/* Shared dark style for all input components */
+.rz-inputtext,
+.rz-inputnumber,
+.rz-inputtextarea {
+    background-color: #2a2a3d !important;
+    color: #ffffff !important;
+    border: 1px solid #444 !important;
+}
+
+    /* Focus effect for all inputs */
+    .rz-inputtext:focus,
+    .rz-inputnumber:focus,
+    .rz-inputtextarea:focus {
+        border-color: #5c6bc0 !important;
+        box-shadow: 0 0 5px #5c6bc0 !important;
+    }
+
+    /* Disabled inputs */
+    .rz-inputtext[disabled],
+    .rz-inputnumber[disabled],
+    .rz-inputtextarea[disabled] {
+        background-color: #2e2e3e !important;
+        color: #aaaaaa !important;
+    }
