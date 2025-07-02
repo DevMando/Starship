@@ -51,12 +51,12 @@ cd StarshipWebApp
 Create a `.env` file at the root of the `StarshipWebApp` project based on `.env.example`.
 
 ```env
-# === Database ===
-DEFAULT_CONNECTION_STRING=Server=sqlserver;Database=StarshipDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
+# === Database (uses Docker SQL Server container) ===
+ConnectionStrings__DefaultConnection=Server=sqlserver;Database=StarshipDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
 
 # === Google OAuth ===
-GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=your-google-client-secret
+Authentication__Google__ClientId=your-google-client-id.apps.googleusercontent.com
+Authentication__Google__ClientSecret=your-google-client-secret
 ```
 
 > ⚠️ Do NOT check in your `.env` file to source control.
