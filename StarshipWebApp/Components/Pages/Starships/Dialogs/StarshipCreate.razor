@@ -24,36 +24,40 @@
 
 <RadzenTemplateForm Data="@starship" TItem="Starship" Submit="@OnSubmit">
     <ChildContent>
-
-
         <Condition Evaluation="currentStep == 0">
             <Match>
                 <RadzenFieldset Text="Basic Starship Details">
-                    <RadzenLabel Text="Name" />
+                    <RadzenLabel Text="Name *" />
                     <RadzenTextBox @bind-Value="starship.Name" Style="width:100%" Name="Name" />
+                    <RadzenRequiredValidator Text="Name is required" Component="Name" />
 
-                    <RadzenLabel Text="Model" />
-                    <RadzenTextBox @bind-Value="starship.Model" Style="width:100%" />
+                    <RadzenLabel Text="Model *" />
+                    <RadzenTextBox @bind-Value="starship.Model" Style="width:100%" Name="Model" />
+                    <RadzenRequiredValidator Text="Model is required" Component="Model" />
 
-                    <RadzenLabel Text="Manufacturer" />
+                    <RadzenLabel Text="Manufacturer *" />
                     <RadzenAutoComplete Data="@_starshipManufacturers"
                                         @bind-Value="starship.Manufacturer"
                                         Placeholder="Select or type a manufacturer"
                                         FilterOperator="StringFilterOperator.Contains"
                                         AllowCustom="true"
                                         Style="width:100%"
-                                        class="dark-autocomplete" />
+                                        class="dark-autocomplete"
+                                        Name="Manufacturer" />
+                    <RadzenRequiredValidator Text="Manufacturer is required" Component="Manufacturer" />
 
-                    <RadzenLabel Text="Starship Class" />
+                    <RadzenLabel Text="Starship Class *" />
                     <RadzenAutoComplete Data="@_starshipClasses"
                                         @bind-Value="starship.StarshipClass"
                                         Placeholder="Select or type class"
                                         FilterOperator="StringFilterOperator.Contains"
                                         AllowCustom="true"
                                         Style="width:100%"
-                                        class="dark-autocomplete" />
+                                        class="dark-autocomplete"
+                                        Name="StarshipClass" />
+                    <RadzenRequiredValidator Text="Class is required" Component="StarshipClass" />
 
-                    <FormattedNumericInput Label="Cost (Credits)"
+                    <FormattedNumericInput Label="Cost (Credits) *"
                                            Name="CostInCredits"
                                            @bind-Value="starship.CostInCredits" />
                 </RadzenFieldset>
@@ -84,12 +88,12 @@
                                            Name="MGLT"
                                            @bind-Value="starship.MGLT" />
 
-                    <RadzenLabel Text="Length (meters)" />
-                    <RadzenTextBox @bind-Value="starship.Length" Style="width:100%" />
+                    <RadzenLabel Text="Length (meters) *" />
+                    <RadzenTextBox @bind-Value="starship.Length" Style="width:100%" Name="Length" />
+                    <RadzenRequiredValidator Text="Length is required" Component="Length" />
                 </RadzenFieldset>
             </Match>
         </Condition>
-
 
         <Condition Evaluation="currentStep==2">
             <Match>
@@ -98,13 +102,15 @@
                                            Name="CargoCapacity"
                                            @bind-Value="starship.CargoCapacity" />
 
-                    <RadzenLabel Text="Consumables (Duration)" />
-                    <RadzenTextBox @bind-Value="starship.Consumables" Style="width:100%" />
+                    <RadzenLabel Text="Consumables *" />
+                    <RadzenTextBox @bind-Value="starship.Consumables" Style="width:100%" Name="Consumables" />
+                    <RadzenRequiredValidator Text="Consumables is required" Component="Consumables" />
                 </RadzenFieldset>
 
                 <RadzenFieldset Text="Crew & Passengers" Style="margin-top: 20px;">
-                    <RadzenLabel Text="Crew" />
-                    <RadzenTextBox @bind-Value="starship.Crew" Style="width:100%" />
+                    <RadzenLabel Text="Crew *" />
+                    <RadzenTextBox @bind-Value="starship.Crew" Style="width:100%" Name="Crew" />
+                    <RadzenRequiredValidator Text="Crew is required" Component="Crew" />
 
                     <FormattedNumericInput Label="Passengers"
                                            Name="Passengers"
@@ -122,25 +128,28 @@
             <Condition Evaluation="currentStep < 2">
                 <Match>
                     <RadzenButton Text="Next"
-                                  Disabled="@(!StepIsValid)"
+                                  Disabled="@(!StepIsValid(currentStep))"
                                   Click="@(() => currentStep++)"
                                   ButtonStyle="ButtonStyle.Primary" />
                 </Match>
                 <NotMatch>
                     <RadzenButton Text="Save"
+                                  Disabled="@(!StepIsValid(currentStep))"
                                   ButtonStyle="ButtonStyle.Success"
                                   ButtonType="ButtonType.Submit"
                                   Icon="save"
                                   Style="margin-left: auto;" />
                 </NotMatch>
             </Condition>
-
         </div>
 
     </ChildContent>
 </RadzenTemplateForm>
 
 @code {
+
+
+
     private Starship starship = new Starship();
     private int currentStep = 0;
     private List<string> _starshipClasses = new();
@@ -161,10 +170,10 @@
             .ToListAsync();
 
         _starshipManufacturers = await StarWarsContext.Starships
-        .Where(s => !string.IsNullOrEmpty(s.StarshipClass))
-        .Select(s => s.Manufacturer)
-        .Distinct()
-        .ToListAsync();
+            .Where(s => !string.IsNullOrEmpty(s.StarshipClass))
+            .Select(s => s.Manufacturer)
+            .Distinct()
+            .ToListAsync();
     }
 
     private async Task OnSubmit()
@@ -178,5 +187,29 @@
         RadzenDialogService.Close(starship);
     }
 
-    private bool StepIsValid => true;
+    private bool StepIsValid(int currentStep)
+{
+    if (currentStep == 0)
+    {
+        return !string.IsNullOrWhiteSpace(starship.Name)
+            && !string.IsNullOrWhiteSpace(starship.Model)
+            && !string.IsNullOrWhiteSpace(starship.Manufacturer)
+            && !string.IsNullOrWhiteSpace(starship.StarshipClass)
+            && starship.CostInCredits.HasValue;
+    }
+    else if (currentStep == 1)
+    {
+        return !string.IsNullOrWhiteSpace(starship.Length);
+    }
+    else if (currentStep == 2)
+    {
+        return !string.IsNullOrWhiteSpace(starship.Consumables)
+            && !string.IsNullOrWhiteSpace(starship.Crew);
+    }
+
+    return false;
+}
+
+
+   
 }
