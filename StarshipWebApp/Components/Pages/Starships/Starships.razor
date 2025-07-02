@@ -76,7 +76,7 @@
         if (starship is null)
         {
             _isLoading = true;
-            StarshipList = await StarWarsContext.Starships.ToListAsync();
+            StarshipList = await StarWarsContext.Starships.OrderByDescending(c => c.CreatedDate).ToListAsync();
             _isLoading = false;
         }
         else
@@ -112,7 +112,14 @@
         return (starship.Name?.ToLowerInvariant().Contains(search) ?? false)
             || (starship.Model?.ToLowerInvariant().Contains(search) ?? false)
             || (starship.StarshipClass?.ToLowerInvariant().Contains(search) ?? false)
-            || (starship.Manufacturer?.ToLowerInvariant().Contains(search) ?? false);
+            || (starship.Manufacturer?.ToLowerInvariant().Contains(search) ?? false)
+            || (starship.Length?.ToString().Contains(search) ?? false)
+            || (starship.CargoCapacity?.ToString().Contains(search) ?? false)
+            || (starship.Crew?.ToString().Contains(search) ?? false)
+            || (starship.Passengers?.ToString().Contains(search) ?? false)
+            || (starship.MaxAtmospheringSpeed?.ToString().Contains(search) ?? false)
+            || (starship.Consumables?.ToLowerInvariant().Contains(search) ?? false)
+            || (starship.CostInCredits?.ToString().Contains(search) ?? false);
     }
 
 
