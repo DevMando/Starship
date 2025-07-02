@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Components\Images\**" />
+    <Content Remove="Components\Images\**" />
+    <EmbeddedResource Remove="Components\Images\**" />
+    <None Remove="Components\Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="C:\Users\MandoAdmin\.nuget\packages\prettyblazor\1.2.0\contentFiles\any\net5.0\License.txt" />
   </ItemGroup>
 
@@ -34,10 +41,6 @@
     <PackageReference Include="MudBlazor" Version="8.8.0" />
     <PackageReference Include="PrettyBlazor" Version="1.2.0" />
     <PackageReference Include="Radzen.Blazor" Version="7.1.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Components\Images\" />
   </ItemGroup>
 
 </Project>
