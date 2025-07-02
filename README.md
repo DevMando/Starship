@@ -8,8 +8,8 @@ This project includes:
 - Authentication via Google OAuth
 - CRUD functionality for Starships
 - Responsive and animated UI using **Radzen** and **MudBlazor**
-- Docker support for containerized deployment
-- Environment variable support for secrets and configs
+- Docker support using **Docker Compose** and **SQL Server in a container**
+- Secrets and config values loaded from a `.env` file
 
 I had a lot of fun styling this project! Future features may include:
 - Relational data linking Pilots and Films to Starships
@@ -26,8 +26,11 @@ I had a lot of fun styling this project! Future features may include:
 - **Starship CRUD Functionality**  
   Create, edit, update, and delete starships. All forms are validated and styled.
 
-- **Docker Support**  
-  Run the app in a containerized environment using `.env` files and `docker-compose`.
+- **Docker Compose Setup**  
+  Fully containerized app and SQL Server using `docker-compose`. No manual SQL installation required.
+
+- **Environment-Based Secrets**  
+  All sensitive credentials and connection strings are configured via `.env` to support secure and flexible deployments.
 
 - **Responsive UI with Animations**  
   A modern, sci-fi-inspired user interface using Radzen Panels and MudBlazor animations.
@@ -47,31 +50,29 @@ cd StarshipWebApp
 
 Create a `.env` file at the root of the `StarshipWebApp` project based on `.env.example`.
 
-```
+```env
 # === Database ===
-ConnectionStrings__DefaultConnection=Server=YOUR_SERVER;Database=StarshipDb;User Id=YOUR_USERNAME;Password=YOUR_PASSWORD;
+DEFAULT_CONNECTION_STRING=Server=sqlserver;Database=StarshipDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
 
 # === Google OAuth ===
-Authentication__Google__ClientId=your-google-client-id.apps.googleusercontent.com
-Authentication__Google__ClientSecret=your-google-client-secret
+GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your-google-client-secret
 ```
 
 > ⚠️ Do NOT check in your `.env` file to source control.
 
-### 3. Run with Docker
-
-```bash
-docker build -t starshipwebapp .
-docker run --env-file .env -p 8080:8080 starshipwebapp
-```
-
-Then navigate to `http://localhost:8080`
-
-### 4. (Optional) Run with Docker Compose
+### 3. Run with Docker Compose (Recommended)
 
 ```bash
 docker-compose up --build
 ```
+
+Then navigate to [http://localhost:8080](http://localhost:8080)
+
+This will:
+- Start SQL Server in a container
+- Build and launch the Blazor web app
+- Automatically apply EF Core migrations and seed the database
 
 ---
 
@@ -92,10 +93,10 @@ docker-compose up --build
 - .NET 8
 - Blazor Server
 - EF Core
-- SQL Server
+- SQL Server (Docker containerized)
 - Radzen Blazor Components
 - MudBlazor
-- Docker
+- Docker & Docker Compose
 
 ---
 
@@ -121,3 +122,4 @@ docker-compose up --build
 ## ✅ Status
 
 This project is feature-complete for the coding challenge but open to future polish and enhancements.
+
