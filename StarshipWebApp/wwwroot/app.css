@@ -61,7 +61,10 @@ h1:focus {
 
 /* Body + Layout + Content */
 body, .rz-layout, .rz-body {
-    background: linear-gradient(#2c2c2e, #1f1f21) !important; /* Cool steel grey gradient */
+    background-color: #1a1a1a !important; /* Fallback color */
+    background-image: url('/images/background.png') !important; /* Update path */
+    background-repeat: repeat !important;
+    background-size: 600px 600px !important;
     color: #e0e0e0 !important;
 }
 
@@ -101,6 +104,7 @@ body, .rz-layout, .rz-body {
     color: #999999 !important;
 }
 
+/* Navigation Items */
 .rz-navigation-item {
     color: white !important;
     background-color: #48484a !important;
@@ -111,3 +115,15 @@ body, .rz-layout, .rz-body {
     background-color: #48484a !important;
 }
 
+.glass-effect {
+    background: rgba(255, 255, 255, 0);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(6.6px);
+    -webkit-backdrop-filter: blur(6.6px);
+}
+
+.login-graphic {
+    height: 540px;
+    border-radius: 30px;
+}

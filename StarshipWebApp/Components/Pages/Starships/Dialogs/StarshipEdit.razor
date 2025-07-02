@@ -14,99 +14,102 @@
 
 <RadzenTemplateForm Data="@starship" TItem="Starship" Submit="@OnSubmit">
     <ChildContent>
-        <RadzenCard>
-            <RadzenRow>
-                <!-- Left Column -->
-                <RadzenColumn Width="50%">
-                    <RadzenFieldset Text="Basic Starship Details">
-                        <RadzenLabel Text="Name" />
-                        <RadzenTextBox @bind-Value="starship.Name" @oninput="OnChange" Style="width:100%" Name="Name" />
 
-                        <RadzenLabel Text="Model" />
-                        <RadzenTextBox @bind-Value="starship.Model" @oninput="OnChange" Style="width:100%" Name="Model" />
+        <RadzenRow>
+            <!-- Left Column -->
+            <RadzenColumn Width="50%">
+                <RadzenFieldset Text="Basic Starship Details">
+                    <RadzenLabel Text="Name" />
+                    <RadzenTextBox @bind-Value="starship.Name" @oninput="OnChange" Style="width:100%" Name="Name" />
 
-                        <RadzenLabel Text="Manufacturer" />
-                        <RadzenTextBox @bind-Value ="starship.Manufacturer" @oninput="OnChange" Style="width:100%" Name="Manufacturer" />
+                    <RadzenLabel Text="Model" />
+                    <RadzenTextBox @bind-Value="starship.Model" @oninput="OnChange" Style="width:100%" Name="Model" />
 
-                        <RadzenLabel Text="Starship Class" />
-                        <RadzenAutoComplete Data="@_starshipClasses"
-                                            @bind-Value="starship.StarshipClass"
-                                            Placeholder="Select or type class"
-                                            FilterOperator="StringFilterOperator.Contains"
-                                            AllowCustom="true"
-                                            @oninput="@(args => OnChange(args))"
-                                            Style="width:100%"
-                                            Name="StarshipClass" />
-                    </RadzenFieldset>
+                    <RadzenLabel Text="Manufacturer" />
+                    <RadzenTextBox @bind-Value="starship.Manufacturer" @oninput="OnChange" Style="width:100%" Name="Manufacturer" />
 
-                    <RadzenFieldset Text="Crew & Passenger Info" Style="margin-top: 20px;">
-                        <RadzenLabel Text="Crew" />
-                        <RadzenTextBox @bind-Value="starship.Crew" @oninput="OnChange" Style="width:100%" Name="Crew" />
+                    <RadzenLabel Text="Starship Class" />
+                    <RadzenAutoComplete Data="@_starshipClasses"
+                                        @bind-Value="starship.StarshipClass"
+                                        Placeholder="Select or type class"
+                                        FilterOperator="StringFilterOperator.Contains"
+                                        AllowCustom="true"
+                                        @oninput="@(args => OnChange(args))"
+                                        Style="width:100%"
+                                        Name="StarshipClass" />
+                </RadzenFieldset>
 
-                        <FormattedNumericInput Label="Passengers"
-                                               Name="Passengers"
-                                               @bind-Value="starship.Passengers"
-                                               Change="@((int? value) => OnChange(value))" />
-                    </RadzenFieldset>
-                </RadzenColumn>
+                <RadzenFieldset Text="Crew & Passenger Info" Style="margin-top: 20px;">
+                    <RadzenLabel Text="Crew" />
+                    <RadzenTextBox @bind-Value="starship.Crew" @oninput="OnChange" Style="width:100%" Name="Crew" />
 
-                <!-- Right Column -->
-                <RadzenColumn Width="50%">
-                    <RadzenFieldset Text="Performance Specs">
+                    <FormattedNumericInput Label="Passengers"
+                                           Name="Passengers"
+                                           @bind-Value="starship.Passengers"
+                                           Change="@((int? value) => OnChange(value))" />
+                </RadzenFieldset>
+            </RadzenColumn>
 
-                        <FormattedNumericInput Label="Max Speed (Atmospheric)"
-                                               Name="MaxAtmospheringSpeed"
-                                               @bind-Value="starship.MaxAtmospheringSpeed"
-                                               Change="@((int? value) => OnChange(value))" />
+            <!-- Right Column -->
+            <RadzenColumn Width="50%">
+                <RadzenFieldset Text="Performance Specs">
 
-                        <RadzenLabel Text="Hyperdrive Rating" />
+                    <FormattedNumericInput Label="Max Speed (Atmospheric)"
+                                           Name="MaxAtmospheringSpeed"
+                                           @bind-Value="starship.MaxAtmospheringSpeed"
+                                           Change="@((int? value) => OnChange(value))" />
 
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <RadzenSlider @bind-Value="starship.HyperdriveRating"
-                                          Min="0"
-                                          Max="10"
-                                          Step="0.1"
-                                          Name="HyperdriveRating"
-                                          Change="@((decimal? value) => OnChange(value))"
-                                          Style="flex-grow: 1;"
-                                          ShowTicks="true"
-                                          TicksStep="1"
-                                          TValue="decimal?" />
+                    <RadzenLabel Text="Hyperdrive Rating" />
 
-                            <RadzenBadge Text="@($"{starship.HyperdriveRating:0.0}")" Style="min-width: 40px;" />
-                        </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <RadzenSlider @bind-Value="starship.HyperdriveRating"
+                                      Min="0"
+                                      Max="10"
+                                      Step="0.1"
+                                      Name="HyperdriveRating"
+                                      Change="@((decimal? value) => OnChange(value))"
+                                      Style="flex-grow: 1;"
+                                      ShowTicks="true"
+                                      TicksStep="1" 
+                                      TValue="decimal?" />
 
-                        <FormattedNumericInput Label="Speed (MGLT)"
-                                               Name="MGLT"
-                                               @bind-Value="starship.MGLT"
-                                               Change="@((int? value) => OnChange(value))" />
+                        <RadzenBadge Text="@($"{starship.HyperdriveRating:0.0}")" Style="min-width: 40px;" />
+                    </div>
 
-                        <RadzenLabel Text="Length (meters)" />
-                        <RadzenTextBox @bind-Value="starship.Length" Change="OnChange" Style="width:100%" Name="Length" />
-                    </RadzenFieldset>
+                    <FormattedNumericInput Label="Speed (MGLT)"
+                                           Name="MGLT"
+                                           @bind-Value="starship.MGLT"
+                                           Change="@((int? value) => OnChange(value))" />
 
-                    <RadzenFieldset Text="Cargo & Capacity" Style="margin-top: 20px;">
-                        <FormattedNumericInput Label="Cargo Capacity (kg)"
-                                               Name="CargoCapacity"
-                                               @bind-Value="starship.CargoCapacity"
-                                               Change="@((long? value) => OnChange(value))" />
+                    <RadzenLabel Text="Length (meters)" />
+                    <RadzenTextBox @bind-Value="starship.Length" Change="OnChange" Style="width:100%" Name="Length" />
+                </RadzenFieldset>
+
+                <RadzenFieldset Text="Cargo & Capacity" Style="margin-top: 20px;">
+                    <FormattedNumericInput Label="Cargo Capacity (kg)"
+                                           Name="CargoCapacity"
+                                           @bind-Value="starship.CargoCapacity"
+                                           Change="@((long? value) => OnChange(value))" />
 
 
-                        <RadzenLabel Text="Consumables (Duration)" />
-                        <RadzenTextBox @bind-Value="starship.Consumables" @oninput="OnChange" Style="width:100%" Name="Consumables" />
-                    </RadzenFieldset>
-                </RadzenColumn>
-            </RadzenRow>
+                    <RadzenLabel Text="Consumables (Duration)" />
+                    <RadzenTextBox @bind-Value="starship.Consumables" @oninput="OnChange" Style="width:100%" Name="Consumables" />
+                </RadzenFieldset>
+            </RadzenColumn>
+        </RadzenRow>
 
-            <div style="margin-top: 20px;">
-                <MudBlazor.MudTooltip Text="@(_isDirty ? "Save Starship changes you have made" : "No Changes have been made to the Starship")" Placement="MudBlazor.Placement.Top" Color="MudBlazor.Color.Info" Arrow="true">
-                    <RadzenButton ButtonType="ButtonType.Submit" Text="Save" Icon="save" Style="margin-right: 10px;" Disabled="!_isDirty" />
-                </MudBlazor.MudTooltip>
+        <div style="margin-top: 20px;">
+            <MudBlazor.MudTooltip Text="@(_isDirty ? "Save Starship changes you have made" : "No Changes have been made to the Starship")" Placement="MudBlazor.Placement.Top" Color="MudBlazor.Color.Info" Arrow="true">
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Save" Icon="save" Style="margin-right: 10px;" Disabled="!_isDirty" />
+            </MudBlazor.MudTooltip>
 
-                <RadzenButton Text="Cancel" Click="() => RadzenDialogService.Close(null)" ButtonStyle="ButtonStyle.Secondary" />
+            <RadzenButton Text="Cancel" Click="() => RadzenDialogService.Close(null)" ButtonStyle="ButtonStyle.Secondary" />
+            <Animate Animation="Animations.FlipUp">
                 <RadzenBadge Text="Unsaved Changes" BadgeStyle="BadgeStyle.Success" Variant="Variant.Filled" Visible="_isDirty" Style="float:right;" />
-            </div>
-        </RadzenCard>
+            </Animate>
+
+        </div>
+
     </ChildContent>
 </RadzenTemplateForm>
 
