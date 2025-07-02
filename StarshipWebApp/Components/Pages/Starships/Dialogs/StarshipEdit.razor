@@ -14,7 +14,7 @@
 
 <RadzenTemplateForm Data="@starship" TItem="Starship" Submit="@OnSubmit">
     <ChildContent>
-        <RadzenCard>
+     
             <RadzenRow>
                 <!-- Left Column -->
                 <RadzenColumn Width="50%">
@@ -106,7 +106,7 @@
                 <RadzenButton Text="Cancel" Click="() => RadzenDialogService.Close(null)" ButtonStyle="ButtonStyle.Secondary" />
                 <RadzenBadge Text="Unsaved Changes" BadgeStyle="BadgeStyle.Success" Variant="Variant.Filled" Visible="_isDirty" Style="float:right;" />
             </div>
-        </RadzenCard>
+        
     </ChildContent>
 </RadzenTemplateForm>
 

@@ -96,17 +96,185 @@
         -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
         box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
     }
-    
-    .gsi-material-button:not(:disabled):hover .gsi-material-button-state {
+
+        .gsi-material-button:not(:disabled):hover .gsi-material-button-state {
             background-color: #303030;
             opacity: 8%;
         }
 
 
 .mud-table-row {
-    cursor: pointer!important;
+    cursor: pointer !important;
 }
 
-.mud-selected-row {
-    background-color: lightskyblue !important;
+
+
+
+
+/**CUSTOM DARK GRID*/
+/* Outer container */
+.custom-dark-grid {
+    color: black !important;
+    background-color: lightgray !important;
 }
+    /* Header row */
+    .custom-dark-grid .mud-table-header {
+        background-color: white !important;
+        color: white !important;
+    }
+
+    /* Each header cell */
+    .custom-dark-grid .mud-table-head th {
+        background-color: #525271 !important;
+        color: white !important;
+    }
+
+    /* Pager background and text */
+    .custom-dark-grid .mud-table-pagination {
+        background-color: #2b2b2b !important;
+        color: black !important;
+    }
+
+    /* Dropdown for "Rows per page" */
+    .custom-dark-grid .mud-select,
+    .custom-dark-grid .mud-select-input,
+    .custom-dark-grid .mud-popover {
+        background-color: lightgray !important;
+        color: black !important;
+    }
+
+    /* Page number text */
+    .custom-dark-grid .mud-table-pagination .mud-typography {
+        color: black !important;
+    }
+
+.mud-selected-row {
+    background-color: lightcyan !important;
+    color: white !important;
+}
+
+/**Dark Dialog*/
+/* Dialog background */
+.dark-dialog .mud-dialog {
+    background-color: #1e1e2f !important;
+    color: #ffffff !important;
+    border-radius: 12px !important;
+}
+
+/* Card sections if used inside */
+.dark-dialog .mud-paper,
+.dark-dialog .mud-card {
+    background-color: #1e1e2f !important;
+    color: #ffffff !important;
+}
+
+/* Input fields */
+.dark-dialog input,
+.dark-dialog .mud-input,
+.dark-dialog .mud-input input {
+    background-color: #2a2a3d !important;
+    color: #ffffff !important;
+}
+
+/* Labels and adornments */
+.dark-dialog .mud-input-label,
+.dark-dialog .mud-input-adornment {
+    color: #aaaaaa !important;
+}
+
+/* Slider thumb and track */
+.dark-dialog .mud-slider-thumb {
+    background-color: #7c4dff !important; /* Or your custom accent color */
+}
+
+.dark-dialog .mud-slider-track {
+    background-color: #5c5c7a !important;
+}
+
+
+/* === RADZEN DIALOG DARK THEME + WATERMARK === */
+
+/* === RADZEN DIALOG DARK THEME + WATERMARK === */
+
+/* Main dialog container */
+.rz-dialog {
+    background-color: #1c1c28 !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6) !important;
+    position: relative; /* Needed for watermark layering */
+}
+
+/* Dialog content wrapper with watermark */
+.rz-dialog-content {
+    background-color: #1c1c28 !important;
+    color: #ffffff !important;
+    position: relative;
+    z-index: 1;
+}
+
+    /* Watermark behind dialog content */
+    .rz-dialog-content::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/images/mandalorian-skull.png'); /* Make sure file exists */
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 60%;
+        opacity: 0.04;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+/* Backdrop overlay behind dialog */
+.rz-overlay {
+    background-color: rgba(0, 0, 0, 0.75) !important;
+}
+
+/* Input fields */
+.rz-inputtext {
+    background-color: #2a2a3d !important;
+    color: #ffffff !important;
+    border: 1px solid #444 !important;
+}
+
+    /* Input focus effect */
+    .rz-inputtext:focus {
+        border-color: #5c6bc0 !important;
+        box-shadow: 0 0 5px #5c6bc0 !important;
+    }
+
+    /* Disabled inputs */
+    .rz-inputtext[disabled] {
+        color: #aaaaaa !important;
+        background-color: #2e2e3e !important;
+    }
+
+/* Labels and legends */
+.rz-label,
+.rz-fieldset-legend {
+    color: #dddddd !important;
+}
+
+/* Buttons */
+.rz-button {
+    color: #ffffff !important;
+}
+
+    /* Primary button */
+    .rz-button.rz-primary {
+        background-color: #3f51b5 !important;
+        border: none !important;
+        color: #ffffff !important;
+    }
+
+    /* Secondary button */
+    .rz-button.rz-secondary {
+        background-color: #444 !important;
+        border: none !important;
+    }
+

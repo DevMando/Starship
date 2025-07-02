@@ -5,9 +5,9 @@
 
 <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center">
     <img src="images/deathstar.png" alt="Death Star Explosion Comic" style="width:400px; border-radius: 20px" />
-    <RadzenText TextStyle="TextStyle.Body1">
+    <h4 style="color:white">
         Are you sure you want to delete the starship <strong>@Starship?.Name</strong>?
-    </RadzenText>
+    </h4>
     <RadzenStack Orientation="Orientation.Horizontal">
         <RadzenButton ButtonStyle="ButtonStyle.Primary" Text="Delete Starship" Click="@(() => RadzenDialogService.Close(true))" />
         <RadzenButton ButtonStyle="ButtonStyle.Secondary" Text="Cancel" Click="@(() => RadzenDialogService.Close(false))" />

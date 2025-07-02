@@ -20,9 +20,9 @@
 
     <NotMatch>
 
-        <MudDataGrid T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickSearch"
+        <MudDataGrid class="custom-dark-grid" T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickSearch"
                      Hideable="true" Striped="true" Hover="false"
-                     RowClick="@RowClicked" RowClassFunc="RowClass" SelectedItem="@selectedStarship" Style="clear:both;">
+                     RowClick="@RowClicked" RowClassFunc="RowClass" SelectedItem="@selectedStarship" >
             <ToolBarContent>
 
                 <StarshipActionPanel SelectedStarship="selectedStarship" UpdateStarships="GetStarshipsAsync" />
