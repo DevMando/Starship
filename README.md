@@ -2,7 +2,7 @@
 
 Live Demo: [https://devmandostarships-ghe2f3acfgdzfrba.centralus-01.azurewebsites.net/](https://devmandostarships-ghe2f3acfgdzfrba.centralus-01.azurewebsites.net/)
 
-A full-stack web application built with **.NET 8**, **Blazor Server**, **Entity Framework Core**, and **SQL Server** that consumes the [SWAPI](https://swapi.dev/) to manage a list of Star Wars starships. 
+A full-stack web application built with **.NET 8**, **Blazor Server**, **Entity Framework Core**, and **SQL Server** that consumes the [SWAPI](https://swapi.info/starships) to manage a list of Star Wars starships. 
 
 This project includes:
 - Authentication via Google OAuth
