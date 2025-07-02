@@ -1,0 +1,42 @@
+﻿@attribute [Authorize]
+@page "/Profile"
+@using Radzen
+@using Radzen.Blazor
+
+<RadzenStack Orientation="Orientation.Horizontal">
+    <Animate Animation="Animations.FlipRight">
+        <img src="./images/mandalorian-skull.png" Style="width: 360px; height: 360px;" />
+    </Animate>
+
+    <Animate Animation="Animations.FlipUp">
+        
+        <RadzenStack Orientation="Orientation.Vertical">
+            <RadzenLabel>
+                Name: <strong>@User.GivenName</strong>
+            </RadzenLabel>
+            <RadzenLabel>
+                Email: <strong>@User.Email</strong>
+            </RadzenLabel>
+            <RadzenLabel>
+                Clan: <strong>@User.FamilyName</strong>
+            </RadzenLabel>
+            <RadzenLabel>
+                Wanted: <strong>@(new Random().Next(1, 3) % 2 == 0 ? "Yes" : "NO")</strong>
+            </RadzenLabel>
+            <RadzenLabel>
+                Planets Visited: <strong>@(new Random().Next(1, 1000).ToString())</strong>
+            </RadzenLabel>
+            <RadzenLabel>
+                Cool: <strong>@(new Random().Next(1, 3) % 2 == 0 ? "Yes" : "NO")</strong>
+            </RadzenLabel>
+        </RadzenStack>
+    </Animate>
+
+</RadzenStack>
+
+
+@code {
+    [CascadingParameter(Name = "User")]
+    public User User { get; set; } = new();
+
+}
