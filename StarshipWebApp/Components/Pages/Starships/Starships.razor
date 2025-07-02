@@ -22,7 +22,7 @@
 
         <MudDataGrid class="custom-dark-grid" T="Starship" MultiSelection="false" Items="@StarshipList" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@QuickSearch"
                      Hideable="true" Striped="true" Hover="false"
-                     RowClick="@RowClicked" RowClassFunc="RowClass" SelectedItem="@selectedStarship" >
+                     RowClick="@RowClicked" RowClassFunc="RowClass" SelectedItem="@selectedStarship">
             <ToolBarContent>
 
                 <StarshipActionPanel SelectedStarship="selectedStarship" UpdateStarships="GetStarshipsAsync" />
@@ -38,6 +38,13 @@
                 <PropertyColumn Property="x => x.StarshipClass" Title="Starship Class" Sortable="true" Filterable="true" />
                 <PropertyColumn Property="x => x.Length" Title="Length" Sortable="true" Filterable="true" />
                 <PropertyColumn Property="x => x.CargoCapacity" Title="Cargo Capacity" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.Crew" Title="Crew" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.Passengers" Title="Passengers" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.MaxAtmospheringSpeed" Title="Max Atmosphering Speed" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.Consumables" Title="Consumables" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.CostInCredits" Title="Cost in Credits" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.CreatedDate" Title="Created" Sortable="true" Filterable="true" />
+                <PropertyColumn Property="x => x.UpdatedDate" Title="Edited" Sortable="true" Filterable="true" />
             </Columns>
             <PagerContent>
                 <MudDataGridPager T="Starship" />
