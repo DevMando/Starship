@@ -297,3 +297,57 @@
     color: #cccccc !important;
     border: 1px solid #555 !important;
 }
+
+
+/** Auto Complete Dark Theme*/
+/* Dropdown background and text */
+.rz-autocomplete-panel {
+    background-color: #1c1c28 !important;
+    color: #ffffff !important;
+    border: 1px solid #333 !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Individual item */
+.rz-autocomplete-item {
+    background-color: transparent !important;
+    color: #dddddd !important;
+    padding: 0.75rem 1rem;
+}
+
+    /* Hover effect */
+    .rz-autocomplete-item:hover {
+        background-color: #33334d !important;
+        color: #ffffff !important;
+    }
+
+    /* Highlighted via arrow keys */
+    .rz-autocomplete-item.rz-state-highlight {
+        background-color: #5c6bc0 !important;
+        color: #ffffff !important;
+    }
+
+/* Shared dark style for all input components */
+.rz-inputtext,
+.rz-inputnumber,
+.rz-inputtextarea {
+    background-color: #2a2a3d !important;
+    color: #ffffff !important;
+    border: 1px solid #444 !important;
+}
+
+    /* Focus effect for all inputs */
+    .rz-inputtext:focus,
+    .rz-inputnumber:focus,
+    .rz-inputtextarea:focus {
+        border-color: #5c6bc0 !important;
+        box-shadow: 0 0 5px #5c6bc0 !important;
+    }
+
+    /* Disabled inputs */
+    .rz-inputtext[disabled],
+    .rz-inputnumber[disabled],
+    .rz-inputtextarea[disabled] {
+        background-color: #2e2e3e !important;
+        color: #aaaaaa !important;
+    }

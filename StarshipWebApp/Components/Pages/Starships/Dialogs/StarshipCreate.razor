@@ -24,15 +24,14 @@
 
 <RadzenTemplateForm Data="@starship" TItem="Starship" Submit="@OnSubmit">
     <ChildContent>
-        <RadzenCard>
+        
 
             <Condition Evaluation="currentStep == 0">
                 <Match>
                     <RadzenFieldset Text="Basic Starship Details">
                         <RadzenLabel Text="Name" />
-                        <RadzenTextBox @bind-Value="starship.Name" Style="width:100%" />
-                        <RadzenRequiredValidator Component="Name" Text="Starship Name is required" Popup=@popup Style="position: absolute" />
-
+                        <RadzenTextBox @bind-Value="starship.Name" Style="width:100%" Name="Name" />
+                    
                         <RadzenLabel Text="Model" />
                         <RadzenTextBox @bind-Value="starship.Model"Style="width:100%" />
 
@@ -42,7 +41,8 @@
                                             Placeholder="Select or type a manufacturer"
                                             FilterOperator="StringFilterOperator.Contains"
                                             AllowCustom="true"
-                                            Style="width:100%" />
+                                            Style="width:100%"
+                                            class="dark-autocomplete" />
 
                         <RadzenLabel Text="Starship Class" />
                         <RadzenAutoComplete Data="@_starshipClasses"
@@ -50,7 +50,8 @@
                                             Placeholder="Select or type class"
                                             FilterOperator="StringFilterOperator.Contains"
                                             AllowCustom="true"
-                                            Style="width:100%" />
+                                            Style="width:100%"
+                                            class="dark-autocomplete" />
 
                         <FormattedNumericInput Label="Cost (Credits)"
                                                Name="CostInCredits"
@@ -138,7 +139,7 @@
                 </Condition>
 
             </div>
-        </RadzenCard>
+     
     </ChildContent>
 </RadzenTemplateForm>
 
