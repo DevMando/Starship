@@ -18,11 +18,11 @@ services:
   web:
     build: .
     ports:
-      - "8080:80"
+      - "8080:8080"
     depends_on:
       - sqlserver
     environment:
-      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=StarshipDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"
-      Authentication__Google__ClientId: ${GOOGLE_CLIENT_ID}
-      Authentication__Google__ClientSecret: ${GOOGLE_CLIENT_SECRET}
+      ConnectionStrings__DefaultConnection: ${ConnectionStrings__DefaultConnection}
+      Authentication__Google__ClientId: ${Authentication__Google__ClientId}
+      Authentication__Google__ClientSecret: ${Authentication__Google__ClientSecret}
 
