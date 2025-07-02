@@ -1,10 +1,15 @@
 ﻿@inject NavigationManager NavigationManager
 @using Radzen
 @using Radzen.Blazor
+@inject Radzen.DialogService DialogService
 
 <Radzen.Blazor.RadzenStack>
-    <img src="@imagePath" style="border-radius: 15px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);overflow: hidden; max-width"/>
-    <RadzenButton Text="@buttonText" Click="Redirect" ButtonStyle="ButtonStyle.Dark" Style="margin-left:16px;"/>
+    <img @onclick="Redirect" src="@imagePath" style="cursor:pointer;border-radius: 15px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);overflow: hidden; max-width" />
+
+    <RadzenButton Text="@buttonText" Click="Redirect" ButtonStyle="ButtonStyle.Dark" Style="margin-left:16px;">
+        @buttonText
+        <RadzenBadge BadgeStyle="BadgeStyle.Warning" Shade="Shade.Lighter" IsPill="@true" Text="Under Development" Visible="isInDevelopment" class="rz-ms-2" />
+    </RadzenButton>
 </Radzen.Blazor.RadzenStack>
 
 

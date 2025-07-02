@@ -14,11 +14,11 @@
 
 <PageTitle>Create Starship</PageTitle>
 
-<RadzenSteps @bind-Value="@currentStep" ShowStepsButtons="true" Style="margin-bottom: 20px;">
+<RadzenSteps @ref=@steps ShowStepsButtons="false" Style="margin-bottom: 20px;">
     <Steps>
-        <RadzenStepsItem Text="Basic Info" />
-        <RadzenStepsItem Text="Performance" />
-        <RadzenStepsItem Text="Capacity & Crew" />
+        <RadzenStepsItem Text="Basic Info" Selected="@(currentStep == 0)" />
+        <RadzenStepsItem Text="Performance" Selected="@(currentStep == 1)" />
+        <RadzenStepsItem Text="Capacity & Crew" Selected="@(currentStep == 2)" />
     </Steps>
 </RadzenSteps>
 
@@ -122,14 +122,14 @@
         <div style="margin-top: 20px; display: flex; justify-content: space-between;">
             <RadzenButton Text="Back"
                           Disabled="@(currentStep == 0)"
-                          Click="@(() => currentStep--)"
+                          Click="@GoToPreviousStep"
                           ButtonStyle="ButtonStyle.Secondary" />
 
             <Condition Evaluation="currentStep < 2">
                 <Match>
                     <RadzenButton Text="Next"
                                   Disabled="@(!StepIsValid(currentStep))"
-                                  Click="@(() => currentStep++)"
+                                  Click="@GoToNextStep"
                                   ButtonStyle="ButtonStyle.Primary" />
                 </Match>
                 <NotMatch>
@@ -142,19 +142,15 @@
                 </NotMatch>
             </Condition>
         </div>
-
     </ChildContent>
 </RadzenTemplateForm>
 
 @code {
-
-
-
     private Starship starship = new Starship();
     private int currentStep = 0;
     private List<string> _starshipClasses = new();
     private List<string> _starshipManufacturers = new();
-    bool popup;
+    RadzenSteps steps;
 
     protected override async Task OnInitializedAsync()
     {
@@ -187,29 +183,33 @@
         RadzenDialogService.Close(starship);
     }
 
+    private void GoToNextStep()
+    {
+        currentStep += 1;
+        steps.NextStep();
+        StateHasChanged();
+    }
+
+    private void GoToPreviousStep()
+    {
+        currentStep -= 1;
+        steps.PrevStep(); 
+        StateHasChanged();
+    }
+
     private bool StepIsValid(int currentStep)
-{
-    if (currentStep == 0)
     {
-        return !string.IsNullOrWhiteSpace(starship.Name)
-            && !string.IsNullOrWhiteSpace(starship.Model)
-            && !string.IsNullOrWhiteSpace(starship.Manufacturer)
-            && !string.IsNullOrWhiteSpace(starship.StarshipClass)
-            && starship.CostInCredits.HasValue;
+        return currentStep switch
+        {
+            0 => !string.IsNullOrWhiteSpace(starship.Name)
+                && !string.IsNullOrWhiteSpace(starship.Model)
+                && !string.IsNullOrWhiteSpace(starship.Manufacturer)
+                && !string.IsNullOrWhiteSpace(starship.StarshipClass)
+                && starship.CostInCredits.HasValue,
+            1 => !string.IsNullOrWhiteSpace(starship.Length),
+            2 => !string.IsNullOrWhiteSpace(starship.Consumables)
+                && !string.IsNullOrWhiteSpace(starship.Crew),
+            _ => false
+        };
     }
-    else if (currentStep == 1)
-    {
-        return !string.IsNullOrWhiteSpace(starship.Length);
-    }
-    else if (currentStep == 2)
-    {
-        return !string.IsNullOrWhiteSpace(starship.Consumables)
-            && !string.IsNullOrWhiteSpace(starship.Crew);
-    }
-
-    return false;
-}
-
-
-   
 }
