@@ -14,7 +14,7 @@
 
 <PageTitle>Create Starship</PageTitle>
 
-<RadzenSteps @bind-Value="@currentStep" ShowStepsButtons="false" Style="margin-bottom: 20px;">
+<RadzenSteps @bind-Value="@currentStep" ShowStepsButtons="true" Style="margin-bottom: 20px;">
     <Steps>
         <RadzenStepsItem Text="Basic Info" />
         <RadzenStepsItem Text="Performance" />
@@ -24,122 +24,119 @@
 
 <RadzenTemplateForm Data="@starship" TItem="Starship" Submit="@OnSubmit">
     <ChildContent>
-        
 
-            <Condition Evaluation="currentStep == 0">
+
+        <Condition Evaluation="currentStep == 0">
+            <Match>
+                <RadzenFieldset Text="Basic Starship Details">
+                    <RadzenLabel Text="Name" />
+                    <RadzenTextBox @bind-Value="starship.Name" Style="width:100%" Name="Name" />
+
+                    <RadzenLabel Text="Model" />
+                    <RadzenTextBox @bind-Value="starship.Model" Style="width:100%" />
+
+                    <RadzenLabel Text="Manufacturer" />
+                    <RadzenAutoComplete Data="@_starshipManufacturers"
+                                        @bind-Value="starship.Manufacturer"
+                                        Placeholder="Select or type a manufacturer"
+                                        FilterOperator="StringFilterOperator.Contains"
+                                        AllowCustom="true"
+                                        Style="width:100%"
+                                        class="dark-autocomplete" />
+
+                    <RadzenLabel Text="Starship Class" />
+                    <RadzenAutoComplete Data="@_starshipClasses"
+                                        @bind-Value="starship.StarshipClass"
+                                        Placeholder="Select or type class"
+                                        FilterOperator="StringFilterOperator.Contains"
+                                        AllowCustom="true"
+                                        Style="width:100%"
+                                        class="dark-autocomplete" />
+
+                    <FormattedNumericInput Label="Cost (Credits)"
+                                           Name="CostInCredits"
+                                           @bind-Value="starship.CostInCredits" />
+                </RadzenFieldset>
+            </Match>
+        </Condition>
+
+        <Condition Evaluation="currentStep == 1">
+            <Match>
+                <RadzenFieldset Text="Performance Specs">
+                    <FormattedNumericInput Label="Max Speed (Atmospheric)"
+                                           Name="MaxAtmospheringSpeed"
+                                           @bind-Value="starship.MaxAtmospheringSpeed" />
+
+                    <RadzenLabel Text="Hyperdrive Rating" Style="margin-top:14px;" />
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom:14px;">
+                        <RadzenSlider @bind-Value="starship.HyperdriveRating"
+                                      Min="0"
+                                      Max="10"
+                                      Step="0.1"
+                                      ShowTicks="true"
+                                      TicksStep="1"
+                                      TValue="decimal?"
+                                      Style="flex-grow: 1;" />
+                        <RadzenBadge Text="@($"{starship.HyperdriveRating:0.0}")" Style="min-width: 40px;" />
+                    </div>
+
+                    <FormattedNumericInput Label="Speed (MGLT)"
+                                           Name="MGLT"
+                                           @bind-Value="starship.MGLT" />
+
+                    <RadzenLabel Text="Length (meters)" />
+                    <RadzenTextBox @bind-Value="starship.Length" Style="width:100%" />
+                </RadzenFieldset>
+            </Match>
+        </Condition>
+
+
+        <Condition Evaluation="currentStep==2">
+            <Match>
+                <RadzenFieldset Text="Cargo & Capacity">
+                    <FormattedNumericInput Label="Cargo Capacity (kg)"
+                                           Name="CargoCapacity"
+                                           @bind-Value="starship.CargoCapacity" />
+
+                    <RadzenLabel Text="Consumables (Duration)" />
+                    <RadzenTextBox @bind-Value="starship.Consumables" Style="width:100%" />
+                </RadzenFieldset>
+
+                <RadzenFieldset Text="Crew & Passengers" Style="margin-top: 20px;">
+                    <RadzenLabel Text="Crew" />
+                    <RadzenTextBox @bind-Value="starship.Crew" Style="width:100%" />
+
+                    <FormattedNumericInput Label="Passengers"
+                                           Name="Passengers"
+                                           @bind-Value="starship.Passengers" />
+                </RadzenFieldset>
+            </Match>
+        </Condition>
+
+        <div style="margin-top: 20px; display: flex; justify-content: space-between;">
+            <RadzenButton Text="Back"
+                          Disabled="@(currentStep == 0)"
+                          Click="@(() => currentStep--)"
+                          ButtonStyle="ButtonStyle.Secondary" />
+
+            <Condition Evaluation="currentStep < 2">
                 <Match>
-                    <RadzenFieldset Text="Basic Starship Details">
-                        <RadzenLabel Text="Name" />
-                        <RadzenTextBox @bind-Value="starship.Name" Style="width:100%" Name="Name" />
-                    
-                        <RadzenLabel Text="Model" />
-                        <RadzenTextBox @bind-Value="starship.Model"Style="width:100%" />
-
-                        <RadzenLabel Text="Manufacturer" />
-                        <RadzenAutoComplete Data="@_starshipManufacturers"
-                                            @bind-Value="starship.Manufacturer"
-                                            Placeholder="Select or type a manufacturer"
-                                            FilterOperator="StringFilterOperator.Contains"
-                                            AllowCustom="true"
-                                            Style="width:100%"
-                                            class="dark-autocomplete" />
-
-                        <RadzenLabel Text="Starship Class" />
-                        <RadzenAutoComplete Data="@_starshipClasses"
-                                            @bind-Value="starship.StarshipClass"
-                                            Placeholder="Select or type class"
-                                            FilterOperator="StringFilterOperator.Contains"
-                                            AllowCustom="true"
-                                            Style="width:100%"
-                                            class="dark-autocomplete" />
-
-                        <FormattedNumericInput Label="Cost (Credits)"
-                                               Name="CostInCredits"
-                                               @bind-Value="starship.CostInCredits"/>
-                    </RadzenFieldset>
+                    <RadzenButton Text="Next"
+                                  Disabled="@(!StepIsValid)"
+                                  Click="@(() => currentStep++)"
+                                  ButtonStyle="ButtonStyle.Primary" />
                 </Match>
+                <NotMatch>
+                    <RadzenButton Text="Save"
+                                  ButtonStyle="ButtonStyle.Success"
+                                  ButtonType="ButtonType.Submit"
+                                  Icon="save"
+                                  Style="margin-left: auto;" />
+                </NotMatch>
             </Condition>
 
-            <Condition Evaluation="currentStep == 1">
-                <Match>
-                    <RadzenFieldset Text="Performance Specs">
-                        <FormattedNumericInput Label="Max Speed (Atmospheric)"
-                                               Name="MaxAtmospheringSpeed"
-                                               @bind-Value="starship.MaxAtmospheringSpeed"
-                                                />
+        </div>
 
-                        <RadzenLabel Text="Hyperdrive Rating" Style="margin-top:14px;" />
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom:14px;">
-                            <RadzenSlider @bind-Value="starship.HyperdriveRating"
-                                          Min="0"
-                                          Max="10"
-                                          Step="0.1"
-                                          ShowTicks="true"
-                                          TicksStep="1"
-                                          TValue="decimal?"
-                                          Style="flex-grow: 1;" />
-                            <RadzenBadge Text="@($"{starship.HyperdriveRating:0.0}")" Style="min-width: 40px;" />
-                        </div>
-
-                        <FormattedNumericInput Label="Speed (MGLT)"
-                                               Name="MGLT"
-                                               @bind-Value="starship.MGLT"
-                                                />
-
-                        <RadzenLabel Text="Length (meters)" />
-                        <RadzenTextBox @bind-Value="starship.Length"  Style="width:100%" />
-                    </RadzenFieldset>
-                </Match>
-            </Condition>
-
-
-            <Condition Evaluation="currentStep==2">
-                <Match>
-                    <RadzenFieldset Text="Cargo & Capacity">
-                        <FormattedNumericInput Label="Cargo Capacity (kg)"
-                                               Name="CargoCapacity"
-                                               @bind-Value="starship.CargoCapacity"
-                                                />
-
-                        <RadzenLabel Text="Consumables (Duration)" />
-                        <RadzenTextBox @bind-Value="starship.Consumables" Style="width:100%" />
-                    </RadzenFieldset>
-
-                    <RadzenFieldset Text="Crew & Passengers" Style="margin-top: 20px;">
-                        <RadzenLabel Text="Crew" />
-                        <RadzenTextBox @bind-Value="starship.Crew"  Style="width:100%" />
-
-                        <FormattedNumericInput Label="Passengers"
-                                               Name="Passengers"
-                                               @bind-Value="starship.Passengers"
-                                                />
-                    </RadzenFieldset>
-                </Match>
-            </Condition>
-
-            <div style="margin-top: 20px; display: flex; justify-content: space-between;">
-                <RadzenButton Text="Back"
-                              Disabled="@(currentStep == 0)"
-                              Click="@(() => currentStep--)"
-                              ButtonStyle="ButtonStyle.Secondary" />
-
-                <Condition Evaluation="currentStep < 2">
-                    <Match>
-                        <RadzenButton Text="Next"
-                                      Disabled="@(!StepIsValid)"
-                                      Click="@(() => currentStep++)"
-                                      ButtonStyle="ButtonStyle.Primary" />
-                    </Match>
-                    <NotMatch>
-                        <RadzenButton Text="Save"
-                                      ButtonType="ButtonType.Submit"
-                                      Icon="save"
-                                      Style="margin-left: auto;" />
-                    </NotMatch>
-                </Condition>
-
-            </div>
-     
     </ChildContent>
 </RadzenTemplateForm>
 
@@ -181,5 +178,5 @@
         RadzenDialogService.Close(starship);
     }
 
-    private bool StepIsValid => true; // You can implement per-step validation if needed
+    private bool StepIsValid => true;
 }
